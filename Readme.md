@@ -1,7 +1,7 @@
 # Личный проект «Что посмотреть» [![Build status][travis-image]][travis-url]
 
-* Студент: [Aliya](https://up.htmlacademy.ru/react/6/user/289087).
-* Наставник: `Неизвестно`.
+* Студент: [Aliya](https://htmlacademy.ru/profile/id289087).
+* Наставник: [Jura Zubach](https://htmlacademy.ru/profile/id95078).
 
 ---
 
