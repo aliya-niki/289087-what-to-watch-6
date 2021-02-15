@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Switch, Route, BrowserRouter} from 'react-router-dom';
+import {filmPropsValidation} from '../../props-validation';
 import Main from '../main/main';
 import SignIn from '../sign-in/sign-in';
 import MyList from '../my-list/my-list';
@@ -9,30 +10,29 @@ import AddReview from '../add-review/add-review';
 import Player from '../player/player';
 import NotFoundPage from '../not-found-page/not-found-page';
 
-const App = ({name, releaseDate, genre}) => (
+const App = ({films}) => (
   <BrowserRouter>
     <Switch>
       <Route exact path='/'>
         <Main
-          name={name}
-          genre={genre}
-          releaseDate={releaseDate}
+          promo={films[0]}
+          films={films}
         />
       </Route>
       <Route exact path='/login'>
         <SignIn />
       </Route>
       <Route exact path='/mylist'>
-        <MyList />
+        <MyList films={films.filter((film) => (film.isFavorite))}/>
       </Route>
       <Route exact path='/films/:id'>
-        <Film />
+        <Film film={films[0]} films={films}/>
       </Route>
       <Route exact path='/films/:id/review'>
-        <AddReview />
+        <AddReview film={films[0]}/>
       </Route>
       <Route exact path='/player/:id'>
-        <Player />
+        <Player film={films[0]}/>
       </Route>
       <Route>
         <NotFoundPage />
@@ -43,9 +43,7 @@ const App = ({name, releaseDate, genre}) => (
 
 
 App.propTypes = {
-  name: PropTypes.string.isRequired,
-  genre: PropTypes.string.isRequired,
-  releaseDate: PropTypes.number.isRequired,
+  films: PropTypes.arrayOf(filmPropsValidation.film).isRequired
 };
 
 export default App;
