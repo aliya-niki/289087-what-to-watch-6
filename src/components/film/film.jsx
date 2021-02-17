@@ -1,15 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Link, useHistory} from 'react-router-dom';
+import {Link, useHistory, useParams} from 'react-router-dom';
 import {filmPropsValidation} from '../../props-validation';
 import {getFilmRatingLevel} from '../../utils';
 import MoviesList from '../movies-list/movies-list';
 
 const SIMILAR_MOVIES_MAX_NUMBER = 4;
 
-const Film = ({film, films}) => {
+const Film = ({films}) => {
+  const paramsId = parseInt(useParams().id, 10);
+  const film = films.find(({id}) => paramsId === id);
   const {name, backgroundImage, posterImage, genre, released, rating, scoresCount, director, starring, description, id} = film;
+  const similarFilms = films.filter((movie) => movie.id !== id).slice(0, SIMILAR_MOVIES_MAX_NUMBER);
+
   const history = useHistory();
+  const handleOnPlayClick = () => history.push(`/player/${id}`);
+  const handleOnMyListClick = () => history.push(`/mylist`);
 
   return (
     <React.Fragment>
@@ -46,19 +52,19 @@ const Film = ({film, films}) => {
               </p>
 
               <div className="movie-card__buttons">
-                <button className="btn btn--play movie-card__button" type="button" onClick={() => history.push(`/player/:id`)}>
+                <button className="btn btn--play movie-card__button" type="button" onClick={handleOnPlayClick}>
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
                   </svg>
                   <span>Play</span>
                 </button>
-                <button className="btn btn--list movie-card__button" type="button" onClick={() => history.push(`/mylist`)}>
+                <button className="btn btn--list movie-card__button" type="button" onClick={handleOnMyListClick}>
                   <svg viewBox="0 0 19 20" width="19" height="20">
                     <use xlinkHref="#add"></use>
                   </svg>
                   <span>My list</span>
                 </button>
-                <Link to="/films/:id/review" className="btn movie-card__button">Add review</Link>
+                <Link to={`/films/${id}/review`} className="btn movie-card__button">Add review</Link>
               </div>
             </div>
           </div>
@@ -108,7 +114,7 @@ const Film = ({film, films}) => {
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
 
-          <MoviesList films={films.filter((movie) => movie.id !== id).slice(0, SIMILAR_MOVIES_MAX_NUMBER)}></MoviesList>
+          <MoviesList films={similarFilms}></MoviesList>
         </section>
 
         <footer className="page-footer">
@@ -130,7 +136,6 @@ const Film = ({film, films}) => {
 };
 
 Film.propTypes = {
-  ...filmPropsValidation,
   films: PropTypes.arrayOf(filmPropsValidation.film).isRequired,
 };
 

@@ -10,36 +10,40 @@ import AddReview from '../add-review/add-review';
 import Player from '../player/player';
 import NotFoundPage from '../not-found-page/not-found-page';
 
-const App = ({films}) => (
-  <BrowserRouter>
-    <Switch>
-      <Route exact path='/'>
-        <Main
-          promo={films[0]}
-          films={films}
-        />
-      </Route>
-      <Route exact path='/login'>
-        <SignIn />
-      </Route>
-      <Route exact path='/mylist'>
-        <MyList films={films.filter((film) => (film.isFavorite))}/>
-      </Route>
-      <Route exact path='/films/:id'>
-        <Film film={films[0]} films={films}/>
-      </Route>
-      <Route exact path='/films/:id/review'>
-        <AddReview film={films[0]}/>
-      </Route>
-      <Route exact path='/player/:id'>
-        <Player film={films[0]}/>
-      </Route>
-      <Route>
-        <NotFoundPage />
-      </Route>
-    </Switch>
-  </BrowserRouter>
-);
+const App = ({films}) => {
+  const myListFilms = films.filter((film) => (film.isFavorite));
+
+  return (
+    <BrowserRouter>
+      <Switch>
+        <Route exact path='/'>
+          <Main
+            promo={films[0]}
+            films={films}
+          />
+        </Route>
+        <Route exact path='/login'>
+          <SignIn />
+        </Route>
+        <Route exact path='/mylist'>
+          <MyList films={myListFilms}/>
+        </Route>
+        <Route exact path='/films/:id'>
+          <Film films={films}/>
+        </Route>
+        <Route exact path='/films/:id/review'>
+          <AddReview films={films}/>
+        </Route>
+        <Route exact path='/player/:id'>
+          <Player films={films}/>
+        </Route>
+        <Route>
+          <NotFoundPage />
+        </Route>
+      </Switch>
+    </BrowserRouter>
+  );
+};
 
 
 App.propTypes = {

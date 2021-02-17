@@ -1,7 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {filmPropsValidation} from '../../props-validation';
+import {useParams} from 'react-router-dom';
 
-const Player = ({film}) => {
+const Player = ({films}) => {
+  const paramsId = parseInt(useParams().id, 10);
+  const film = films.find(({id}) => paramsId === id);
   const {videoLink, name} = film;
 
   return (
@@ -41,7 +45,7 @@ const Player = ({film}) => {
 };
 
 Player.propTypes = {
-  ...filmPropsValidation,
+  films: PropTypes.arrayOf(filmPropsValidation.film).isRequired,
 };
 
 export default Player;

@@ -1,10 +1,13 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
+import PropTypes from 'prop-types';
 import {filmPropsValidation} from '../../props-validation';
 import AddReviewForm from '../add-review-form/add-review-form';
 
-const AddReview = ({film}) => {
-  const {name, backgroundImage, posterImage} = film;
+const AddReview = ({films}) => {
+  const paramsId = parseInt(useParams().id, 10);
+  const film = films.find(({id}) => paramsId === id);
+  const {name, backgroundImage, posterImage, id} = film;
 
   return (
     <section className="movie-card movie-card--full">
@@ -27,10 +30,10 @@ const AddReview = ({film}) => {
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <Link to="/films/:id" className="breadcrumbs__link">{name}</Link>
+                <Link to={`/films/${id}`} className="breadcrumbs__link">{name}</Link>
               </li>
               <li className="breadcrumbs__item">
-                <Link to="/films/:id/review" className="breadcrumbs__link">Add review</Link>
+                <Link to={`/films/${id}/review`} className="breadcrumbs__link">Add review</Link>
               </li>
             </ul>
           </nav>
@@ -54,7 +57,7 @@ const AddReview = ({film}) => {
 };
 
 AddReview.propTypes = {
-  ...filmPropsValidation,
+  films: PropTypes.arrayOf(filmPropsValidation.film).isRequired,
 };
 
 export default AddReview;

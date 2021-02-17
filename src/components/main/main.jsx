@@ -7,8 +7,11 @@ import MoviesList from '../movies-list/movies-list';
 const MOVIES_NUMBER_PER_STEP = 8;
 
 const Main = ({promo, films}) => {
-  const {name, released, genre, backgroundImage, posterImage} = promo;
+  const {name, released, genre, backgroundImage, posterImage, id} = promo;
+  const filmsPerStep = films.slice(0, MOVIES_NUMBER_PER_STEP);
   const history = useHistory();
+  const handleOnPlayClick = () => history.push(`/player/${id}`);
+  const handleOnMyListClick = () => history.push(`/mylist`);
 
   return (
     <React.Fragment>
@@ -49,13 +52,13 @@ const Main = ({promo, films}) => {
               </p>
 
               <div className="movie-card__buttons">
-                <button className="btn btn--play movie-card__button" type="button" onClick={() => history.push(`/player/:id`)}>
+                <button className="btn btn--play movie-card__button" type="button" onClick={handleOnPlayClick}>
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
                   </svg>
                   <span>Play</span>
                 </button>
-                <button className="btn btn--list movie-card__button" type="button" onClick={() => history.push(`/mylist`)}>
+                <button className="btn btn--list movie-card__button" type="button" onClick={handleOnMyListClick}>
                   <svg viewBox="0 0 19 20" width="19" height="20">
                     <use xlinkHref="#add"></use>
                   </svg>
@@ -104,7 +107,7 @@ const Main = ({promo, films}) => {
             </li>
           </ul>
 
-          <MoviesList films={films.slice(0, MOVIES_NUMBER_PER_STEP)}></MoviesList>
+          <MoviesList films={filmsPerStep}></MoviesList>
 
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>
