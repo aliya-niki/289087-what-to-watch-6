@@ -3,10 +3,16 @@ import {Link, useParams} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {filmPropsValidation} from '../../props-validation';
 import AddReviewForm from '../add-review-form/add-review-form';
+import NotFoundPage from '../not-found-page/not-found-page';
 
 const AddReview = ({films}) => {
   const paramsId = parseInt(useParams().id, 10);
   const film = films.find(({id}) => paramsId === id);
+
+  if (!film) {
+    return <NotFoundPage />;
+  }
+
   const {name, backgroundImage, posterImage, id} = film;
 
   return (

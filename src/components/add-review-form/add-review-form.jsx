@@ -3,9 +3,13 @@ import React, {useState} from 'react';
 const RATING_STARS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 const AddReviewForm = () => {
-  const [review, setReview] = useState({rating: 0, comment: ``});
-  const handleRatingChange = ({target}) => setReview({...review, rating: target.value});
-  const handleCommentChange = ({target}) => setReview({...review, comment: target.value});
+  // eslint-disable-next-line no-unused-vars
+  const [rating, setRating] = useState(10);
+  // eslint-disable-next-line no-unused-vars
+  const [comment, setComment] = useState(``);
+
+  const handleRatingChange = ({target}) => setRating(target.value);
+  const handleCommentChange = ({target}) => setComment(target.value);
 
   return (
     <form action="#" className="add-review__form">

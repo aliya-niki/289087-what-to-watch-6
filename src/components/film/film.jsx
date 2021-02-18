@@ -4,12 +4,18 @@ import {Link, useHistory, useParams} from 'react-router-dom';
 import {filmPropsValidation} from '../../props-validation';
 import {getFilmRatingLevel} from '../../utils';
 import MoviesList from '../movies-list/movies-list';
+import NotFoundPage from '../not-found-page/not-found-page';
 
 const SIMILAR_MOVIES_MAX_NUMBER = 4;
 
 const Film = ({films}) => {
   const paramsId = parseInt(useParams().id, 10);
   const film = films.find(({id}) => paramsId === id);
+
+  if (!film) {
+    return <NotFoundPage />;
+  }
+
   const {name, backgroundImage, posterImage, genre, released, rating, scoresCount, director, starring, description, id} = film;
   const similarFilms = films.filter((movie) => movie.id !== id).slice(0, SIMILAR_MOVIES_MAX_NUMBER);
 

@@ -2,10 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {filmPropsValidation} from '../../props-validation';
 import {useParams} from 'react-router-dom';
+import NotFoundPage from '../not-found-page/not-found-page';
 
 const Player = ({films}) => {
   const paramsId = parseInt(useParams().id, 10);
   const film = films.find(({id}) => paramsId === id);
+
+  if (!film) {
+    return <NotFoundPage />;
+  }
+
   const {videoLink, name} = film;
 
   return (
