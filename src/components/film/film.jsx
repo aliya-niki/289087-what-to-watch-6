@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Link, useHistory, useParams} from 'react-router-dom';
-import {filmPropsValidation} from '../../props-validation';
-import {getFilmRatingLevel} from '../../utils';
+import {filmPropsValidation, reviewPropsValidation} from '../../props-validation';
 import MoviesList from '../movies-list/movies-list';
 import NotFoundPage from '../not-found-page/not-found-page';
+import Tabs from '../tabs/tabs';
 
 const SIMILAR_MOVIES_MAX_NUMBER = 4;
 
-const Film = ({films}) => {
+const Film = ({films, reviews}) => {
   const paramsId = parseInt(useParams().id, 10);
   const film = films.find(({id}) => paramsId === id);
 
@@ -16,7 +16,8 @@ const Film = ({films}) => {
     return <NotFoundPage />;
   }
 
-  const {name, backgroundImage, posterImage, genre, released, rating, scoresCount, director, starring, description, id} = film;
+  const {name, backgroundImage, posterImage, genre, released, id} = film;
+  const filmReviews = reviews.filter((review) => review.id === id);
   const similarFilms = films.filter((movie) => movie.id !== id).slice(0, SIMILAR_MOVIES_MAX_NUMBER);
 
   const history = useHistory();
@@ -82,37 +83,7 @@ const Film = ({films}) => {
               <img src={posterImage} alt={`${name} poster`} width="218" height="327" />
             </div>
 
-            <div className="movie-card__desc">
-              <nav className="movie-nav movie-card__nav">
-                <ul className="movie-nav__list">
-                  <li className="movie-nav__item movie-nav__item--active">
-                    <a href="#" className="movie-nav__link">Overview</a>
-                  </li>
-                  <li className="movie-nav__item">
-                    <a href="#" className="movie-nav__link">Details</a>
-                  </li>
-                  <li className="movie-nav__item">
-                    <a href="#" className="movie-nav__link">Reviews</a>
-                  </li>
-                </ul>
-              </nav>
-
-              <div className="movie-rating">
-                <div className="movie-rating__score">{rating}</div>
-                <p className="movie-rating__meta">
-                  <span className="movie-rating__level">{getFilmRatingLevel(rating)}</span>
-                  <span className="movie-rating__count">{scoresCount} ratings</span>
-                </p>
-              </div>
-
-              <div className="movie-card__text">
-                <p>{description}</p>
-
-                <p className="movie-card__director"><strong>Director: {director}</strong></p>
-
-                <p className="movie-card__starring"><strong>Starring: {starring.join(`, `)} and other</strong></p>
-              </div>
-            </div>
+            <Tabs film={film} reviews={filmReviews} />
           </div>
         </div>
       </section>
@@ -143,6 +114,7 @@ const Film = ({films}) => {
 
 Film.propTypes = {
   films: PropTypes.arrayOf(filmPropsValidation.film).isRequired,
+  reviews: PropTypes.arrayOf(reviewPropsValidation.review).isRequired,
 };
 
 export default Film;

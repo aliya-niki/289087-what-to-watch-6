@@ -5,7 +5,7 @@ export const filmPropsValidation = {
     name: PropTypes.string.isRequired,
     backgroundImage: PropTypes.string.isRequired,
     posterImage: PropTypes.string.isRequired,
-    genre: PropTypes.string.isRequired,
+    genre: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
     released: PropTypes.number.isRequired,
     rating: PropTypes.number.isRequired,
     scoresCount: PropTypes.number.isRequired,

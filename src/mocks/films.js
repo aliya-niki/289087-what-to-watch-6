@@ -11,7 +11,7 @@ export default [{
   rating: 8.9,
   scoresCount: 240,
   director: `Wes Andreson`,
-  starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`, `Saoirse Ronan`],
+  starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`, `Saoirse Ronan`, `Tilda Swinton`, `Tom Wilkinson`, `Owen Wilkinson`, `Adrien Brody`, `Ralph Fiennes`],
   runTime: 99,
   genre: `Comedy`,
   released: 2014,
@@ -31,7 +31,7 @@ export default [{
   director: `Bryan Singer`,
   starring: [`Rami Malek`, `Lucy Boynton`, `Gwilym Lee`],
   runTime: 134,
-  genre: `Biography`,
+  genre: [`Drama`, `Biography`],
   released: 2018,
   isFavorite: true
 }, {
