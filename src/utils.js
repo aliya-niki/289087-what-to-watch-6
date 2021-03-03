@@ -1,3 +1,11 @@
+const MINUTES_IN_HOUR = 60;
+
+export const formatRunTime = (timeInMinutes) => {
+  const hours = Math.floor(timeInMinutes / MINUTES_IN_HOUR);
+  const minutes = timeInMinutes - MINUTES_IN_HOUR * hours;
+  return `${hours ? hours.toString() + `h` : ``} ${minutes ? minutes.toString() + `m` : ``}`;
+};
+
 export const getFilmRatingLevel = (rating) => {
   switch (true) {
     case (rating > 0 && rating <= 3):
@@ -14,3 +22,5 @@ export const getFilmRatingLevel = (rating) => {
       return ``;
   }
 };
+
+
