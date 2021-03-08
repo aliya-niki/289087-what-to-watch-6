@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {filmPropsValidation} from '../../props-validation';
 import {useParams} from 'react-router-dom';
+import {connect} from 'react-redux';
 import NotFoundPage from '../not-found-page/not-found-page';
 
 const Player = ({films}) => {
@@ -54,4 +55,9 @@ Player.propTypes = {
   films: PropTypes.arrayOf(filmPropsValidation.film).isRequired,
 };
 
-export default Player;
+const mapStateToProps = (state) => ({
+  films: state.films,
+});
+
+export {Player};
+export default connect(mapStateToProps, null)(Player);
