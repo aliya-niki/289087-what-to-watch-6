@@ -3,6 +3,8 @@ import {getFilmsByGenre} from '../utils';
 export const ActionType = {
   CHANGE_ACTIVE_GENRE: `films/changeActiveGenre`,
   FILTER_FILMS_BY_GENRE: `films/filterFilmsByGenre`,
+  RESET_SHOWN_FILMS_NUMBER: `films/resetShownFilmsNumber`,
+  INCREASE_SHOWN_FILMS_NUMBER: `films/increaseShownFilmsNumber`,
 };
 
 export const ActionCreator = {
@@ -18,4 +20,10 @@ export const ActionCreator = {
       payload: filteredFilms
     };
   },
+  resetShownFilmsNumber: () => ({
+    type: ActionType.RESET_SHOWN_FILMS_NUMBER,
+  }),
+  increaseShownFilmsNumber: () => ({
+    type: ActionType.INCREASE_SHOWN_FILMS_NUMBER,
+  })
 };

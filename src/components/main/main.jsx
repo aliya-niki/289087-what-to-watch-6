@@ -1,19 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import {ActionCreator} from '../../store/action';
 import {useHistory} from 'react-router-dom';
 import {filmPropsValidation} from '../../props-validation';
 import MoviesList from '../movies-list/movies-list';
 import GenresList from '../genres-list/genres-list';
+import ShowMore from '../show-more/show-more';
 
-const MOVIES_NUMBER_PER_STEP = 8;
-
-const Main = ({promo, filteredFilms}) => {
+const Main = ({promo, filteredFilms, shownFilmsNumber, onPageChange}) => {
   const {name, released, genre, backgroundImage, posterImage, id} = promo;
-  const filteredFilmsPerStep = filteredFilms.slice(0, MOVIES_NUMBER_PER_STEP);
+
+  const filteredFilmsPerStep = filteredFilms.slice(0, shownFilmsNumber);
+
   const history = useHistory();
-  const handleOnPlayClick = () => history.push(`/player/${id}`);
-  const handleOnMyListClick = () => history.push(`/mylist`);
+  const handleOnPlayClick = () => {
+    history.push(`/player/${id}`);
+    onPageChange();
+  };
+  const handleOnMyListClick = () => {
+    history.push(`/mylist`);
+    onPageChange();
+  };
 
   return (
     <React.Fragment>
@@ -80,9 +88,7 @@ const Main = ({promo, filteredFilms}) => {
 
           <MoviesList films={filteredFilmsPerStep} />
 
-          <div className="catalog__more">
-            <button className="catalog__button" type="button">Show more</button>
-          </div>
+          {shownFilmsNumber < filteredFilms.length ? <ShowMore /> : ``}
         </section>
 
         <footer className="page-footer">
@@ -107,12 +113,21 @@ const Main = ({promo, filteredFilms}) => {
 Main.propTypes = {
   promo: filmPropsValidation.film,
   filteredFilms: PropTypes.arrayOf(filmPropsValidation.film).isRequired,
+  shownFilmsNumber: PropTypes.number.isRequired,
+  onPageChange: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   filteredFilms: state.filteredFilms,
   promo: state.promo,
+  shownFilmsNumber: state.shownFilmsNumber,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onPageChange() {
+    dispatch(ActionCreator.resetShownFilmsNumber());
+  }
 });
 
 export {Main};
-export default connect(mapStateToProps, null)(Main);
+export default connect(mapStateToProps, mapDispatchToProps)(Main);

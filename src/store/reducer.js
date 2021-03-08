@@ -1,5 +1,5 @@
 import {ActionType} from './action';
-import {DEFAULT_ACTIVE_GENRE} from '../const';
+import {DEFAULT_ACTIVE_GENRE, MOVIES_NUMBER_PER_STEP} from '../const';
 import films from '../mocks/films';
 import reviews from '../mocks/reviews';
 
@@ -10,7 +10,8 @@ const initialState = {
   filteredFilms: films,
   films,
   reviews,
-  promo
+  promo,
+  shownFilmsNumber: MOVIES_NUMBER_PER_STEP
 };
 
 const reducer = (state = initialState, action) => {
@@ -19,6 +20,10 @@ const reducer = (state = initialState, action) => {
       return {...state, activeGenre: action.payload};
     case ActionType.FILTER_FILMS_BY_GENRE:
       return {...state, filteredFilms: action.payload};
+    case ActionType.RESET_SHOWN_FILMS_NUMBER:
+      return {...state, shownFilmsNumber: MOVIES_NUMBER_PER_STEP};
+    case ActionType.INCREASE_SHOWN_FILMS_NUMBER:
+      return {...state, shownFilmsNumber: state.shownFilmsNumber + MOVIES_NUMBER_PER_STEP};
   }
 
   return state;

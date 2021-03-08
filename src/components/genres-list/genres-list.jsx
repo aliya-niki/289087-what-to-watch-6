@@ -42,6 +42,7 @@ const mapDispatchToProps = (dispatch) => ({
   onGenreChange(films, genre) {
     dispatch(ActionCreator.changeActiveGenre(genre));
     dispatch(ActionCreator.filterFilmsByGenre(films, genre));
+    dispatch(ActionCreator.resetShownFilmsNumber());
   }
 });
 
