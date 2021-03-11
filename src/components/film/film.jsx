@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Link, useHistory, useParams} from 'react-router-dom';
+import {connect} from 'react-redux';
 import {filmPropsValidation, reviewPropsValidation} from '../../props-validation';
+import {getSimilarFilms} from '../../utils';
 import MoviesList from '../movies-list/movies-list';
 import NotFoundPage from '../not-found-page/not-found-page';
 import Tabs from '../tabs/tabs';
-
-const SIMILAR_MOVIES_MAX_NUMBER = 4;
 
 const Film = ({films, reviews}) => {
   const paramsId = parseInt(useParams().id, 10);
@@ -18,7 +18,7 @@ const Film = ({films, reviews}) => {
 
   const {name, backgroundImage, posterImage, genre, released, id} = film;
   const filmReviews = reviews.filter((review) => review.id === id);
-  const similarFilms = films.filter((movie) => movie.id !== id).slice(0, SIMILAR_MOVIES_MAX_NUMBER);
+  const similarFilms = getSimilarFilms(films, id, genre);
 
   const history = useHistory();
   const handleOnPlayClick = () => history.push(`/player/${id}`);
@@ -91,7 +91,7 @@ const Film = ({films, reviews}) => {
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
 
-          <MoviesList films={similarFilms}></MoviesList>
+          <MoviesList films={similarFilms} />
         </section>
 
         <footer className="page-footer">
@@ -117,4 +117,10 @@ Film.propTypes = {
   reviews: PropTypes.arrayOf(reviewPropsValidation.review).isRequired,
 };
 
-export default Film;
+const mapStateToProps = (state) => ({
+  films: state.films,
+  reviews: state.reviews,
+});
+
+export {Film};
+export default connect(mapStateToProps, null)(Film);

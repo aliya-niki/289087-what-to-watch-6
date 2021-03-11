@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link, useParams} from 'react-router-dom';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 import {filmPropsValidation} from '../../props-validation';
 import AddReviewForm from '../add-review-form/add-review-form';
 import NotFoundPage from '../not-found-page/not-found-page';
@@ -66,4 +67,9 @@ AddReview.propTypes = {
   films: PropTypes.arrayOf(filmPropsValidation.film).isRequired,
 };
 
-export default AddReview;
+const mapStateToProps = (state) => ({
+  films: state.films,
+});
+
+export {AddReview};
+export default connect(mapStateToProps, null)(AddReview);
