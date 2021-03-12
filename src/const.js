@@ -10,3 +10,8 @@ export const RatingLevels = {
   VERY_GOOD: `Very good`,
   AWESOME: `Awesome`
 };
+
+export const AuthorizationStatus = {
+  AUTH: `AUTH`,
+  NO_AUTH: `NO_AUTH`,
+};

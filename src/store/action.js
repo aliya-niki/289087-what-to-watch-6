@@ -5,6 +5,9 @@ export const ActionType = {
   FILTER_FILMS_BY_GENRE: `films/filterFilmsByGenre`,
   RESET_SHOWN_FILMS_NUMBER: `films/resetShownFilmsNumber`,
   INCREASE_SHOWN_FILMS_NUMBER: `films/increaseShownFilmsNumber`,
+  REQUIRE_AUTHORIZATION: `user/requireAuthorization`,
+  LOAD_FILMS: `films/loadFilms`,
+  LOAD_PROMO: `films/loadPromo`
 };
 
 export const ActionCreator = {
@@ -25,5 +28,17 @@ export const ActionCreator = {
   }),
   increaseShownFilmsNumber: () => ({
     type: ActionType.INCREASE_SHOWN_FILMS_NUMBER,
+  }),
+  requireAuthorization: (status) => ({
+    type: ActionType.REQUIRE_AUTHORIZATION,
+    payload: status,
+  }),
+  loadFilms: (films) => ({
+    type: ActionType.LOAD_FILMS,
+    payload: films,
+  }),
+  loadPromo: (promo) => ({
+    type: ActionType.LOAD_PROMO,
+    payload: promo,
   })
 };
