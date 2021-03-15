@@ -6,7 +6,6 @@ import {filmPropsValidation} from '../../props-validation';
 import AddReviewForm from '../add-review-form/add-review-form';
 import NotFoundPage from '../not-found-page/not-found-page';
 import Header from '../header/header';
-import {AppRoute} from '../../const';
 
 const AddReview = ({films}) => {
   const paramsId = parseInt(useParams().id, 10);
@@ -31,10 +30,10 @@ const AddReview = ({films}) => {
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <Link to={AppRoute.FILM} className="breadcrumbs__link">{name}</Link>
+                <Link to={`/films/${id}`} className="breadcrumbs__link">{name}</Link>
               </li>
               <li className="breadcrumbs__item">
-                <Link to={AppRoute.REVIEW} className="breadcrumbs__link">Add review</Link>
+                <a className="breadcrumbs__link">Add review</a>
               </li>
             </ul>
           </nav>
