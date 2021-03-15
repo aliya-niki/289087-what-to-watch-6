@@ -1,7 +1,8 @@
 import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {Switch, Route, BrowserRouter} from 'react-router-dom';
+import {Switch, Route, Router as BrowserRouter} from 'react-router-dom';
+import browserHistory from '../../browser-history';
 import Main from '../main/main';
 import SignIn from '../sign-in/sign-in';
 import MyList from '../my-list/my-list';
@@ -10,7 +11,9 @@ import AddReview from '../add-review/add-review';
 import Player from '../player/player';
 import NotFoundPage from '../not-found-page/not-found-page';
 import LoadingScreen from '../loading-screen/loading-screen';
+import PrivateRoute from '../private-route/private-route';
 import {fetchFilmsList, fetchPromo} from "../../store/api-actions";
+import {AppRoute} from '../../const';
 
 const App = ({isFilmsDataLoaded, onLoadData}) => {
 
@@ -28,24 +31,26 @@ const App = ({isFilmsDataLoaded, onLoadData}) => {
   }
 
   return (
-    <BrowserRouter>
+    <BrowserRouter history={browserHistory}>
       <Switch>
-        <Route exact path='/'>
+        <Route exact path={AppRoute.MAIN}>
           <Main />
         </Route>
-        <Route exact path='/login'>
+        <Route exact path={AppRoute.LOGIN}>
           <SignIn />
         </Route>
-        <Route exact path='/mylist'>
-          <MyList />
-        </Route>
-        <Route exact path='/films/:id'>
+        <PrivateRoute exact
+          path={AppRoute.MY_LIST}
+          render={() => <MyList />}>
+        </PrivateRoute>
+        <Route exact path={AppRoute.FILM}>
           <Film />
         </Route>
-        <Route exact path='/films/:id/review'>
-          <AddReview />
-        </Route>
-        <Route exact path='/player/:id'>
+        <PrivateRoute exact
+          path={AppRoute.REVIEW}
+          render={() => <AddReview />}>
+        </PrivateRoute>
+        <Route exact path={AppRoute.PLAYER}>
           <Player />
         </Route>
         <Route>

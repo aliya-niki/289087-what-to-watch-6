@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {Link, useHistory, useParams} from 'react-router-dom';
 import {connect} from 'react-redux';
@@ -7,8 +7,12 @@ import {getSimilarFilms} from '../../utils';
 import MoviesList from '../movies-list/movies-list';
 import NotFoundPage from '../not-found-page/not-found-page';
 import Tabs from '../tabs/tabs';
+import Header from '../header/header';
+import Footer from '../footer/footer';
+import {AppRoute, AuthorizationStatus} from '../../const';
+import {fetchComments} from '../../store/api-actions';
 
-const Film = ({films, reviews}) => {
+const Film = ({films, reviews, onComponentMount, authorizationStatus}) => {
   const paramsId = parseInt(useParams().id, 10);
   const film = films.find(({id}) => paramsId === id);
 
@@ -16,13 +20,17 @@ const Film = ({films, reviews}) => {
     return <NotFoundPage />;
   }
 
+  useEffect(() => {
+    onComponentMount(paramsId);
+  }, [paramsId]);
+
   const {name, backgroundImage, posterImage, genre, released, id} = film;
-  const filmReviews = reviews.filter((review) => review.id === id);
+
   const similarFilms = getSimilarFilms(films, id, genre);
 
   const history = useHistory();
   const handleOnPlayClick = () => history.push(`/player/${id}`);
-  const handleOnMyListClick = () => history.push(`/mylist`);
+  const handleOnMyListClick = () => history.push(AppRoute.MY_LIST);
 
   return (
     <React.Fragment>
@@ -34,21 +42,7 @@ const Film = ({films, reviews}) => {
 
           <h1 className="visually-hidden">WTW</h1>
 
-          <header className="page-header movie-card__head">
-            <div className="logo">
-              <Link to="/" className="logo__link">
-                <span className="logo__letter logo__letter--1">W</span>
-                <span className="logo__letter logo__letter--2">T</span>
-                <span className="logo__letter logo__letter--3">W</span>
-              </Link>
-            </div>
-
-            <div className="user-block">
-              <div className="user-block__avatar">
-                <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-              </div>
-            </div>
-          </header>
+          <Header additionalClassName={`movie-card__head`}/>
 
           <div className="movie-card__wrap">
             <div className="movie-card__desc">
@@ -71,7 +65,9 @@ const Film = ({films, reviews}) => {
                   </svg>
                   <span>My list</span>
                 </button>
-                <Link to={`/films/${id}/review`} className="btn movie-card__button">Add review</Link>
+                { authorizationStatus === AuthorizationStatus.AUTH &&
+                  <Link to={`/films/${id}/review`} className="btn movie-card__button">Add review</Link>
+                }
               </div>
             </div>
           </div>
@@ -83,7 +79,7 @@ const Film = ({films, reviews}) => {
               <img src={posterImage} alt={`${name} poster`} width="218" height="327" />
             </div>
 
-            <Tabs film={film} reviews={filmReviews} />
+            <Tabs film={film} reviews={reviews} />
           </div>
         </div>
       </section>
@@ -94,19 +90,7 @@ const Film = ({films, reviews}) => {
           <MoviesList films={similarFilms} />
         </section>
 
-        <footer className="page-footer">
-          <div className="logo">
-            <Link to="/" className="logo__link logo__link--light">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </Link>
-          </div>
-
-          <div className="copyright">
-            <p>© 2019 What to watch Ltd.</p>
-          </div>
-        </footer>
+        <Footer />
       </div>
     </React.Fragment>
   );
@@ -115,12 +99,21 @@ const Film = ({films, reviews}) => {
 Film.propTypes = {
   films: PropTypes.arrayOf(filmPropsValidation.film).isRequired,
   reviews: PropTypes.arrayOf(reviewPropsValidation.review).isRequired,
+  onComponentMount: PropTypes.func,
+  authorizationStatus: PropTypes.oneOf([...Object.values(AuthorizationStatus)]),
 };
 
 const mapStateToProps = (state) => ({
   films: state.films,
-  reviews: state.reviews,
+  reviews: state.currentFilmComments,
+  authorizationStatus: state.authorizationStatus,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onComponentMount(id) {
+    dispatch(fetchComments(id));
+  }
 });
 
 export {Film};
-export default connect(mapStateToProps, null)(Film);
+export default connect(mapStateToProps, mapDispatchToProps)(Film);

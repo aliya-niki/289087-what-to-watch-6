@@ -5,6 +5,8 @@ import {connect} from 'react-redux';
 import {filmPropsValidation} from '../../props-validation';
 import AddReviewForm from '../add-review-form/add-review-form';
 import NotFoundPage from '../not-found-page/not-found-page';
+import Header from '../header/header';
+import {AppRoute} from '../../const';
 
 const AddReview = ({films}) => {
   const paramsId = parseInt(useParams().id, 10);
@@ -25,32 +27,18 @@ const AddReview = ({films}) => {
 
         <h1 className="visually-hidden">WTW</h1>
 
-        <header className="page-header">
-          <div className="logo">
-            <Link to="/" className="logo__link">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </Link>
-          </div>
-
+        <Header>
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <Link to={`/films/${id}`} className="breadcrumbs__link">{name}</Link>
+                <Link to={AppRoute.FILM} className="breadcrumbs__link">{name}</Link>
               </li>
               <li className="breadcrumbs__item">
-                <Link to={`/films/${id}/review`} className="breadcrumbs__link">Add review</Link>
+                <Link to={AppRoute.REVIEW} className="breadcrumbs__link">Add review</Link>
               </li>
             </ul>
           </nav>
-
-          <div className="user-block">
-            <div className="user-block__avatar">
-              <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-            </div>
-          </div>
-        </header>
+        </Header>
 
         <div className="movie-card__poster movie-card__poster--small">
           <img src={posterImage} alt={`${name} poster`} width="218" height="327" />

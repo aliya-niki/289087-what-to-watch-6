@@ -1,5 +1,5 @@
 import {ActionType} from './action';
-import {DEFAULT_ACTIVE_GENRE, MOVIES_NUMBER_PER_STEP, AuthorizationStatus} from '../const';
+import {DEFAULT_ACTIVE_GENRE, MOVIES_NUMBER_PER_STEP, AuthorizationStatus, ReviewPostStatus} from '../const';
 import reviews from '../mocks/reviews';
 import {getFilmsByGenre} from '../utils';
 
@@ -7,6 +7,7 @@ const initialState = {
   activeGenre: DEFAULT_ACTIVE_GENRE,
   films: [],
   reviews,
+  currentFilmComments: [],
   promo: {
     id: 0,
     name: ``,
@@ -29,7 +30,10 @@ const initialState = {
   filteredFilms: [],
   shownFilmsNumber: MOVIES_NUMBER_PER_STEP,
   authorizationStatus: AuthorizationStatus.NO_AUTH,
-  isFilmsDataLoaded: false
+  userAuthorizationInfo: {},
+  authorizationError: false,
+  isFilmsDataLoaded: false,
+  reviewPostStatus: ReviewPostStatus.PENDING,
 };
 
 const reducer = (state = initialState, action) => {
@@ -59,6 +63,16 @@ const reducer = (state = initialState, action) => {
         ...state,
         authorizationStatus: action.payload,
       };
+    case ActionType.SET_USER_INFO:
+      return {
+        ...state,
+        userAuthorizationInfo: action.payload,
+      };
+    case ActionType.SET_AUTHORIZATION_ERROR:
+      return {
+        ...state,
+        authorizationError: action.payload,
+      };
     case ActionType.LOAD_FILMS:
       return {
         ...state,
@@ -70,6 +84,16 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         promo: action.payload,
+      };
+    case ActionType.LOAD_COMMENTS:
+      return {
+        ...state,
+        currentFilmComments: action.payload,
+      };
+    case ActionType.SET_REVIEW_POST_STATUS:
+      return {
+        ...state,
+        reviewPostStatus: action.payload,
       };
   }
 

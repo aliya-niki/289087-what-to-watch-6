@@ -15,3 +15,26 @@ export const AuthorizationStatus = {
   AUTH: `AUTH`,
   NO_AUTH: `NO_AUTH`,
 };
+
+export const ReviewPostStatus = {
+  LOADING: `LOADING`,
+  LOADED: `LOADED`,
+  ERROR: `ERROR`,
+  PENDING: `PENDING`,
+};
+
+export const AppRoute = {
+  LOGIN: `/login`,
+  FILM: `/films/:id`,
+  REVIEW: `/films/:id/review`,
+  PLAYER: `/player/:id`,
+  MAIN: `/`,
+  MY_LIST: `/mylist`,
+};
+
+export const APIRoute = {
+  FILMS: `/films`,
+  LOGIN: `/login`,
+  PROMO: `/films/promo`,
+  COMMENTS: `/comments`,
+};
