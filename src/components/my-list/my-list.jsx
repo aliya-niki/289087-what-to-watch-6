@@ -5,6 +5,7 @@ import {filmPropsValidation} from '../../props-validation';
 import MoviesList from '../movies-list/movies-list';
 import Header from '../header/header';
 import Footer from '../footer/footer';
+import {getFilms} from '../../store/data/selectors';
 
 const MyList = ({films}) => {
   const myListFilms = films.filter((film) => (film.isFavorite));
@@ -31,7 +32,7 @@ MyList.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  films: state.films,
+  films: getFilms(state),
 });
 
 export {MyList};

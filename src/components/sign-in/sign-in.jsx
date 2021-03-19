@@ -2,9 +2,10 @@ import React, {useRef, useState} from 'react';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {login} from '../../store/api-actions';
+import {login} from '../../store/user/operations';
 import {AppRoute} from '../../const';
 import Footer from '../footer/footer';
+import {getAuthorizationError} from '../../store/user/selectors';
 
 const SignIn = ({onSubmit, authorizationError}) => {
   const [isEmailValid, setEmailValidity] = useState(true);
@@ -85,7 +86,7 @@ SignIn.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  authorizationError: state.authorizationError,
+  authorizationError: getAuthorizationError(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

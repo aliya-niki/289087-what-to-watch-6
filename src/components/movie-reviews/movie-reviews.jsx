@@ -1,48 +1,53 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
-import {reviewPropsValidation} from '../../props-validation';
-import dayjs from 'dayjs';
+import axios from 'axios';
+import {BACKEND_URL, APIRoute} from '../../const';
+import MovieReview from '../movie-review/movie-review';
 
-const MovieReviews = ({reviews}) => {
+const MovieReviews = ({id}) => {
+  const [reviews, setReviews] = useState([]);
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    axios(`${BACKEND_URL}${APIRoute.COMMENTS}/${id}`)
+      .then((response) => setReviews(response.data))
+      .catch((err) => {
+        setError(err);
+      })
+      .finally(() => setIsLoading(false));
+  }, [id]);
+
   const reviewsToFirstColumn = reviews.slice(0, Math.ceil(reviews.length / 2));
   const reviewsToSecondColumn = reviews.slice(Math.ceil(reviews.length / 2));
 
   return (
-    <div className="movie-card__reviews movie-card__row">
-      <div className="movie-card__reviews-col">
-        {reviewsToFirstColumn.map(({user, rating, comment, date}, index) => <div className="review" key={`comment-${user.name}-${index}`}>
-          <blockquote className="review__quote">
-            <p className="review__text">{comment}</p>
+    <React.Fragment>
+      {isLoading ? <p>Loading reviews...</p> : ``}
+      {error ? <p>There was an error when loading reviews</p> : ``}
 
-            <footer className="review__details">
-              <cite className="review__author">{user.name}</cite>
-              <time className="review__date" dateTime={dayjs(date).format(`YYYY-MM-DD`)}>{dayjs(date).format(`MMMM D, YYYY`)}</time>
-            </footer>
-          </blockquote>
-
-          <div className="review__rating">{rating}</div>
-        </div>)}
+      <div className="movie-card__reviews movie-card__row">
+        <div className="movie-card__reviews-col">
+          {reviewsToFirstColumn.map((review, index) =>
+            <MovieReview
+              key={`comment-${review.user.name}-${index}`}
+              review={review} />
+          )}
+        </div>
+        <div className="movie-card__reviews-col">
+          {reviewsToSecondColumn.map((review, index) =>
+            <MovieReview
+              key={`comment-${review.user.name}-${index}`}
+              review={review} />
+          )}
+        </div>
       </div>
-      <div className="movie-card__reviews-col">
-        {reviewsToSecondColumn.map(({user, rating, comment, date}, index) => <div className="review" key={`comment-${user.name}-${index}`}>
-          <blockquote className="review__quote">
-            <p className="review__text">{comment}</p>
-
-            <footer className="review__details">
-              <cite className="review__author">{user.name}</cite>
-              <time className="review__date" dateTime={dayjs(date).format(`YYYY-MM-DD`)}>{dayjs(date).format(`MMMM D, YYYY`)}</time>
-            </footer>
-          </blockquote>
-
-          <div className="review__rating">{rating}</div>
-        </div>)}
-      </div>
-    </div>
+    </React.Fragment>
   );
 };
 
 MovieReviews.propTypes = {
-  reviews: PropTypes.arrayOf(reviewPropsValidation.review).isRequired,
+  id: PropTypes.number.isRequired,
 };
 
 export default MovieReviews;

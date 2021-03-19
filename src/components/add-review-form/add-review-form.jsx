@@ -2,8 +2,9 @@ import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {useParams} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {sendReview} from '../../store/api-actions';
+import {sendReview} from '../../store/data/operations';
 import {ReviewPostStatus} from '../../const';
+import {getReviewPostStatus} from '../../store/data/selectors';
 
 const RATING_STARS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 const DEFAULT_RATING = 2;
@@ -13,7 +14,7 @@ const COMMENT_MIN_LENGTH = 50;
 const AddReviewForm = ({onSubmit, reviewPostStatus}) => {
   const [rating, setRating] = useState(DEFAULT_RATING);
   const [comment, setComment] = useState(``);
-  const id = parseInt(useParams().id, 10);
+  const {id} = useParams();
 
   useEffect(() => {
     if (reviewPostStatus === ReviewPostStatus.LOADED) {
@@ -24,15 +25,16 @@ const AddReviewForm = ({onSubmit, reviewPostStatus}) => {
 
   const handleRatingChange = ({target}) => setRating(target.value);
   const handleCommentChange = ({target}) => setComment(target.value);
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    onSubmit(id, rating, comment);
+  };
 
   return (
     <form
       action="#"
       className="add-review__form"
-      onSubmit={(evt) => {
-        evt.preventDefault();
-        onSubmit(id, rating, comment);
-      }}
+      onSubmit={handleSubmit}
     >
       <div className="rating">
         <div className="rating__stars">
@@ -84,14 +86,13 @@ const AddReviewForm = ({onSubmit, reviewPostStatus}) => {
   );
 };
 
-
 AddReviewForm.propTypes = {
   reviewPostStatus: PropTypes.string,
   onSubmit: PropTypes.func,
 };
 
 const mapStateToProps = (state) => ({
-  reviewPostStatus: state.reviewPostStatus,
+  reviewPostStatus: getReviewPostStatus(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

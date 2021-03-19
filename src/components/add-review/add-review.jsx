@@ -1,24 +1,24 @@
 import React from 'react';
 import {Link, useParams} from 'react-router-dom';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-import {filmPropsValidation} from '../../props-validation';
+import {useSelector} from 'react-redux';
 import AddReviewForm from '../add-review-form/add-review-form';
 import NotFoundPage from '../not-found-page/not-found-page';
 import Header from '../header/header';
+import {getFilmById} from '../../store/data/selectors';
 
-const AddReview = ({films}) => {
-  const paramsId = parseInt(useParams().id, 10);
-  const film = films.find(({id}) => paramsId === id);
+const AddReview = () => {
+  const {id} = useParams();
+
+  const film = useSelector((state) => getFilmById(state, id));
 
   if (!film) {
     return <NotFoundPage />;
   }
 
-  const {name, backgroundImage, posterImage, id} = film;
+  const {name, backgroundImage, backgroundColor, posterImage} = film;
 
   return (
-    <section className="movie-card movie-card--full">
+    <section className="movie-card movie-card--full" style={{background: backgroundColor}}>
       <div className="movie-card__header">
         <div className="movie-card__bg">
           <img src={backgroundImage} alt={name} />
@@ -50,13 +50,4 @@ const AddReview = ({films}) => {
   );
 };
 
-AddReview.propTypes = {
-  films: PropTypes.arrayOf(filmPropsValidation.film).isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  films: state.films,
-});
-
-export {AddReview};
-export default connect(mapStateToProps, null)(AddReview);
+export default AddReview;

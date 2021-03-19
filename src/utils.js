@@ -1,4 +1,4 @@
-import {DEFAULT_ACTIVE_GENRE, SIMILAR_MOVIES_MAX_NUMBER, GENRES_MAX_NUMBER, RatingLevels} from './const';
+import {DEFAULT_ACTIVE_GENRE, SIMILAR_MOVIES_MAX_NUMBER, RatingLevels} from './const';
 
 const MINUTES_IN_HOUR = 60;
 
@@ -25,21 +25,7 @@ export const getFilmRatingLevel = (rating) => {
   }
 };
 
-export const getFilmsGenres = (films) => {
-  const genres = new Set();
-  genres.add(DEFAULT_ACTIVE_GENRE);
-  films.forEach(({genre}) => {
-    if (Array.isArray(genre)) {
-      genre.forEach((genreItem) => genres.add(genreItem));
-      return;
-    }
-    genres.add(genre);
-  });
-
-  return [...genres].slice(0, GENRES_MAX_NUMBER);
-};
-
-export const getFilmsByGenre = (films, currentGenre) => {
+export const filterByGenre = (films, currentGenre) => {
   return currentGenre === DEFAULT_ACTIVE_GENRE
     ? films
     : films.filter(({genre}) => {
@@ -50,13 +36,13 @@ export const getFilmsByGenre = (films, currentGenre) => {
     });
 };
 
-export const getSimilarFilms = (films, currentFilmId, currentFilmGenre) => {
+export const findSimilarFilms = (films, currentFilmId, currentFilmGenre) => {
   let similarFilms = [];
 
   if (Array.isArray(currentFilmGenre)) {
-    currentFilmGenre.forEach((genre) => similarFilms.push(...getFilmsByGenre(films, genre)));
+    currentFilmGenre.forEach((genre) => similarFilms.push(...filterByGenre(films, genre)));
   } else {
-    similarFilms = getFilmsByGenre(films, currentFilmGenre);
+    similarFilms = filterByGenre(films, currentFilmGenre);
   }
 
   return similarFilms.filter(({id}) => id !== currentFilmId).slice(0, SIMILAR_MOVIES_MAX_NUMBER);
