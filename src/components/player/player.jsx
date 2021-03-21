@@ -1,13 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {filmPropsValidation} from '../../props-validation';
 import {useParams} from 'react-router-dom';
-import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
 import NotFoundPage from '../not-found-page/not-found-page';
+import {getFilmById} from '../../store/data/selectors';
 
-const Player = ({films}) => {
-  const paramsId = parseInt(useParams().id, 10);
-  const film = films.find(({id}) => paramsId === id);
+const Player = () => {
+  const {id} = useParams();
+  const film = useSelector((state) => getFilmById(state, id));
 
   if (!film) {
     return <NotFoundPage />;
@@ -51,13 +50,4 @@ const Player = ({films}) => {
   );
 };
 
-Player.propTypes = {
-  films: PropTypes.arrayOf(filmPropsValidation.film).isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  films: state.films,
-});
-
-export {Player};
-export default connect(mapStateToProps, null)(Player);
+export default Player;

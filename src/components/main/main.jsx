@@ -1,52 +1,51 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-import {ActionCreator} from '../../store/action';
+import React, {useState, useEffect} from 'react';
+import {useSelector} from 'react-redux';
 import {useHistory} from 'react-router-dom';
-import {filmPropsValidation} from '../../props-validation';
 import MoviesList from '../movies-list/movies-list';
 import GenresList from '../genres-list/genres-list';
 import ShowMore from '../show-more/show-more';
+import Header from '../header/header';
+import Footer from '../footer/footer';
+import {getActiveGenre, getFilmsFilteredByGenre} from '../../store/app/selectors';
+import {MOVIES_NUMBER_PER_STEP} from '../../const';
+import {getPromo} from '../../store/data/selectors';
 
-const Main = ({promo, filteredFilms, shownFilmsNumber, onPageChange}) => {
-  const {name, released, genre, backgroundImage, posterImage, id} = promo;
+const Main = () => {
+  const [shownFilmsNumber, setShownFilmsNumber] = useState(MOVIES_NUMBER_PER_STEP);
 
-  const filteredFilmsPerStep = filteredFilms.slice(0, shownFilmsNumber);
+  const promo = useSelector(getPromo);
+  const filteredFilms = useSelector(getFilmsFilteredByGenre);
+  const activeGenre = useSelector(getActiveGenre);
+
+  useEffect(() => {
+    setShownFilmsNumber(MOVIES_NUMBER_PER_STEP);
+  }, [activeGenre]);
 
   const history = useHistory();
   const handleOnPlayClick = () => {
     history.push(`/player/${id}`);
-    onPageChange();
   };
   const handleOnMyListClick = () => {
     history.push(`/mylist`);
-    onPageChange();
   };
+
+  const handleShowMoreClick = () => {
+    setShownFilmsNumber((prevState) => prevState + MOVIES_NUMBER_PER_STEP);
+  };
+
+  const {name, released, genre, backgroundImage, backgroundColor, posterImage, id} = promo;
+  const filteredFilmsPerStep = filteredFilms.slice(0, shownFilmsNumber);
 
   return (
     <React.Fragment>
-      <section className="movie-card">
+      <section className="movie-card" style={{background: backgroundColor}}>
         <div className="movie-card__bg">
           <img src={backgroundImage} alt={name} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
 
-        <header className="page-header movie-card__head">
-          <div className="logo">
-            <a className="logo__link">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
-
-          <div className="user-block">
-            <div className="user-block__avatar">
-              <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-            </div>
-          </div>
-        </header>
+        <Header additionalClassName={`movie-card__head`}/>
 
         <div className="movie-card__wrap">
           <div className="movie-card__info">
@@ -83,51 +82,17 @@ const Main = ({promo, filteredFilms, shownFilmsNumber, onPageChange}) => {
       <div className="page-content">
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
-
           <GenresList />
-
           <MoviesList films={filteredFilmsPerStep} />
-
-          {shownFilmsNumber < filteredFilms.length ? <ShowMore /> : ``}
+          {shownFilmsNumber < filteredFilms.length
+            ? <ShowMore onShowMoreClick={handleShowMoreClick}/>
+            : ``}
         </section>
 
-        <footer className="page-footer">
-          <div className="logo">
-            <a className="logo__link logo__link--light">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
-
-          <div className="copyright">
-            <p>© 2019 What to watch Ltd.</p>
-          </div>
-        </footer>
+        <Footer />
       </div>
     </React.Fragment>
   );
 };
 
-
-Main.propTypes = {
-  promo: filmPropsValidation.film,
-  filteredFilms: PropTypes.arrayOf(filmPropsValidation.film).isRequired,
-  shownFilmsNumber: PropTypes.number.isRequired,
-  onPageChange: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  filteredFilms: state.filteredFilms,
-  promo: state.promo,
-  shownFilmsNumber: state.shownFilmsNumber,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onPageChange() {
-    dispatch(ActionCreator.resetShownFilmsNumber());
-  }
-});
-
-export {Main};
-export default connect(mapStateToProps, mapDispatchToProps)(Main);
+export default Main;

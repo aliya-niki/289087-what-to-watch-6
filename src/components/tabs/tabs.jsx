@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
-import PropTypes from 'prop-types';
-import {filmPropsValidation, reviewPropsValidation} from '../../props-validation';
+import {filmPropsValidation} from '../../props-validation';
 import MovieOverview from '../movie-overview/movie-overview';
 import MovieDetails from '../movie-details/movie-details';
 import MovieReviews from '../movie-reviews/movie-reviews';
@@ -11,7 +10,7 @@ const MovieCardTabs = {
   REVIEWS: `Reviews`
 };
 
-const Tabs = ({film, reviews}) => {
+const Tabs = ({film}) => {
   const [activeTab, setActiveTab] = useState(MovieCardTabs.OVERVIEW);
 
   const handleOnTabClick = (evt) => {
@@ -24,7 +23,7 @@ const Tabs = ({film, reviews}) => {
       case MovieCardTabs.DETAILS:
         return <MovieDetails film={film} />;
       case MovieCardTabs.REVIEWS:
-        return <MovieReviews reviews={reviews} />;
+        return <MovieReviews id={film.id} />;
       case MovieCardTabs.OVERVIEW:
       default:
         return <MovieOverview film={film} />;
@@ -53,7 +52,6 @@ const Tabs = ({film, reviews}) => {
 
 Tabs.propTypes = {
   film: filmPropsValidation.film,
-  reviews: PropTypes.arrayOf(reviewPropsValidation.review).isRequired,
 };
 
 export default Tabs;
