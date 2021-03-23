@@ -7,6 +7,8 @@ const VideoPlayer = ({isPlaying, src, poster}) => {
   useEffect(() => {
     if (isPlaying) {
       videoRef.current.play();
+    } else {
+      videoRef.current.load();
     }
   }, [isPlaying]);
 

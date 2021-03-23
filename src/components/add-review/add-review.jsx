@@ -1,15 +1,24 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Link, useParams} from 'react-router-dom';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import AddReviewForm from '../add-review-form/add-review-form';
 import NotFoundPage from '../not-found-page/not-found-page';
 import Header from '../header/header';
 import {getFilmById} from '../../store/data/selectors';
+import {logout} from '../../store/user/operations';
 
 const AddReview = () => {
   const {id} = useParams();
 
   const film = useSelector((state) => getFilmById(state, id));
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    return () => {
+      dispatch(logout());
+    };
+  }, []);
 
   if (!film) {
     return <NotFoundPage />;

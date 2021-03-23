@@ -1,11 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import {useSelector} from 'react-redux';
-import {useHistory} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 import MoviesList from '../movies-list/movies-list';
 import GenresList from '../genres-list/genres-list';
 import ShowMore from '../show-more/show-more';
 import Header from '../header/header';
 import Footer from '../footer/footer';
+import AddToFavorites from '../add-to-favorites/add-to-favorites';
 import {getActiveGenre, getFilmsFilteredByGenre} from '../../store/app/selectors';
 import {MOVIES_NUMBER_PER_STEP} from '../../const';
 import {getPromo} from '../../store/data/selectors';
@@ -24,9 +25,6 @@ const Main = () => {
   const history = useHistory();
   const handleOnPlayClick = () => {
     history.push(`/player/${id}`);
-  };
-  const handleOnMyListClick = () => {
-    history.push(`/mylist`);
   };
 
   const handleShowMoreClick = () => {
@@ -49,9 +47,11 @@ const Main = () => {
 
         <div className="movie-card__wrap">
           <div className="movie-card__info">
-            <div className="movie-card__poster">
-              <img src={posterImage} alt={`${name} poster`} width="218" height="327" />
-            </div>
+            <Link to={`/films/${id}`}>
+              <div className="movie-card__poster">
+                <img src={posterImage} alt={`${name} poster`} width="218" height="327" />
+              </div>
+            </Link>
 
             <div className="movie-card__desc">
               <h2 className="movie-card__title">{name}</h2>
@@ -67,12 +67,7 @@ const Main = () => {
                   </svg>
                   <span>Play</span>
                 </button>
-                <button className="btn btn--list movie-card__button" type="button" onClick={handleOnMyListClick}>
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
-                  <span>My list</span>
-                </button>
+                <AddToFavorites id={Number(id)}/>
               </div>
             </div>
           </div>

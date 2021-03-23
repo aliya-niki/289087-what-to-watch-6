@@ -1,14 +1,24 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-import {filmPropsValidation} from '../../props-validation';
+import React, {useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import MoviesList from '../movies-list/movies-list';
 import Header from '../header/header';
 import Footer from '../footer/footer';
-import {getFilms} from '../../store/data/selectors';
+import {getFavorites} from '../../store/data/selectors';
+import {logout} from '../../store/user/operations';
+import {fetchFavorites} from '../../store/data/operations';
 
-const MyList = ({films}) => {
-  const myListFilms = films.filter((film) => (film.isFavorite));
+const MyList = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchFavorites());
+
+    return () => {
+      dispatch(logout());
+    };
+  }, []);
+
+  const myListFilms = useSelector(getFavorites);
 
   return (
     <div className="user-page">
@@ -27,13 +37,4 @@ const MyList = ({films}) => {
   );
 };
 
-MyList.propTypes = {
-  films: PropTypes.arrayOf(filmPropsValidation.film).isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  films: getFilms(state),
-});
-
-export {MyList};
-export default connect(mapStateToProps, null)(MyList);
+export default MyList;

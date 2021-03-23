@@ -1,8 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, memo} from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import {filmPropsValidation} from '../../props-validation';
-import VideoPlayer from '../video-player/video-player';
+import VideoPlayer from '../preview-player/preview-player';
 
 const PREVIEW_VIDEO_PLAYER_TIMEOUT = 1000;
 
@@ -35,16 +35,17 @@ const MovieCard = ({film, onHover, isActive}) => {
     <article className="small-movie-card catalog__movies-card"
       onMouseOver={handleOnCardMouseHover}
       onMouseLeave={handleOnCardMouseLeave} >
-      <div className="small-movie-card__image">
-        { isActive
-          ? <VideoPlayer poster={previewImage} src={previewVideoLink} isPlaying={isPlaying}/>
-          : <img src={previewImage} alt={name} width="280" height="175" />
-        }
-      </div>
-      <h3 className="small-movie-card__title">
-        <Link to={`/films/${id}`} className="small-movie-card__link">{name}</Link>
-      </h3>
+      <Link to={`/films/${id}`} className="small-movie-card__link">
+        <div className="small-movie-card__image">
+          { isActive
+            ? <VideoPlayer poster={previewImage} src={previewVideoLink} isPlaying={isPlaying}/>
+            : <img src={previewImage} alt={name} width="280" height="175" />
+          }
+        </div>
+        <h3 className="small-movie-card__title">{name}</h3>
+      </Link>
     </article>
+
   );
 };
 
@@ -54,4 +55,4 @@ MovieCard.propTypes = {
   isActive: PropTypes.bool.isRequired,
 };
 
-export default MovieCard;
+export default memo(MovieCard);

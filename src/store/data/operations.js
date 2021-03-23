@@ -1,4 +1,4 @@
-import {loadFilms, loadPromo, setReviewPostStatus} from './actions';
+import {loadFilms, loadPromo, loadFavorites, setReviewPostStatus} from './actions';
 import {redirectToRoute} from '../middlewares/actions';
 import {ReviewPostStatus, APIRoute} from '../../const';
 import {adaptDataToFilm} from '../../services/adapters';
@@ -13,6 +13,11 @@ export const fetchPromo = () => (dispatch, _getState, api) => (
     .then(({data}) => dispatch(loadPromo(adaptDataToFilm(data))))
 );
 
+export const fetchFavorites = () => (dispatch, _getState, api) => (
+  api.get(APIRoute.FAVORITE)
+    .then(({data}) => dispatch(loadFavorites(data.map(adaptDataToFilm))))
+);
+
 export const sendReview = (id, rating, comment) => (dispatch, _getState, api) => {
   dispatch(setReviewPostStatus(ReviewPostStatus.LOADING));
   return api.post(`${APIRoute.COMMENTS}/${id}`, {comment, rating})
@@ -22,3 +27,8 @@ export const sendReview = (id, rating, comment) => (dispatch, _getState, api) =>
     })
     .catch(() => dispatch(setReviewPostStatus(ReviewPostStatus.ERROR)));
 };
+
+export const addToFavorite = (id, status) => (dispatch, _getState, api) => (
+  api.post(`${APIRoute.FAVORITE}/${id}/${Number(status)}`)
+    .then(() => dispatch(fetchFavorites()))
+);

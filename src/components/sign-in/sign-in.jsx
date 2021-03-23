@@ -1,24 +1,25 @@
 import React, {useRef, useState} from 'react';
 import {Link} from 'react-router-dom';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {login} from '../../store/user/operations';
 import {AppRoute} from '../../const';
 import Footer from '../footer/footer';
 import {getAuthorizationError} from '../../store/user/selectors';
 
-const SignIn = ({onSubmit, authorizationError}) => {
+const SignIn = () => {
   const [isEmailValid, setEmailValidity] = useState(true);
   const loginRef = useRef();
   const passwordRef = useRef();
+  const dispatch = useDispatch();
+  const authorizationError = useSelector(getAuthorizationError);
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
 
-    onSubmit({
+    dispatch(login({
       login: loginRef.current.value,
       password: passwordRef.current.value,
-    });
+    }));
   };
 
   return (
@@ -37,11 +38,11 @@ const SignIn = ({onSubmit, authorizationError}) => {
 
       <div className="sign-in user-page__content">
         <form action="#" className="sign-in__form" onSubmit={handleSubmit}>
+          <div className="sign-in__message">
+            {!isEmailValid && <p>Please enter a valid email address</p>}
 
-          {!isEmailValid && <p>Please enter a valid email address</p>}
-
-          {authorizationError && <p>We can’t recognize this email <br/> and password combination. Please try again.</p>}
-
+            {authorizationError && <p>We can’t recognize this email <br/> and password combination. Please try again.</p>}
+          </div>
           <div className="sign-in__fields">
             <div className="sign-in__field">
               <input
@@ -80,20 +81,4 @@ const SignIn = ({onSubmit, authorizationError}) => {
   );
 };
 
-SignIn.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-  authorizationError: PropTypes.bool.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  authorizationError: getAuthorizationError(state),
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onSubmit(authData) {
-    dispatch(login(authData));
-  }
-});
-
-export {SignIn};
-export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
+export default SignIn;

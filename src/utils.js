@@ -1,6 +1,8 @@
-import {DEFAULT_ACTIVE_GENRE, SIMILAR_MOVIES_MAX_NUMBER, RatingLevels} from './const';
+import {DEFAULT_ACTIVE_GENRE, SIMILAR_MOVIES_MAX_NUMBER, RatingLevel} from './const';
 
 const MINUTES_IN_HOUR = 60;
+const SECONDS_IN_HOUR = 3600;
+export const SECONDS_IN_MINUTE = 60;
 
 export const formatRunTime = (timeInMinutes) => {
   const hours = Math.floor(timeInMinutes / MINUTES_IN_HOUR);
@@ -8,18 +10,27 @@ export const formatRunTime = (timeInMinutes) => {
   return `${hours ? hours.toString() + `h` : ``} ${minutes ? minutes.toString() + `m` : ``}`;
 };
 
+export const convertSecondsToHHMMss = (totalSeconds) => {
+  const secondsNumber = parseInt(totalSeconds, 10);
+  const hours = Math.floor(secondsNumber / SECONDS_IN_HOUR);
+  const minutes = Math.floor((secondsNumber - (hours * SECONDS_IN_HOUR)) / SECONDS_IN_MINUTE);
+  const seconds = secondsNumber - (hours * SECONDS_IN_HOUR) - (minutes * SECONDS_IN_MINUTE);
+
+  return `${String(hours).padStart(2, `0`)}:${String(minutes).padStart(2, `0`)}:${String(seconds).padStart(2, `0`)}`;
+};
+
 export const getFilmRatingLevel = (rating) => {
   switch (true) {
     case (rating > 0 && rating <= 3):
-      return RatingLevels.BAD;
+      return RatingLevel.BAD;
     case (rating > 3 && rating <= 5):
-      return RatingLevels.NORMAL;
+      return RatingLevel.NORMAL;
     case (rating > 5 && rating <= 8):
-      return RatingLevels.GOOD;
+      return RatingLevel.GOOD;
     case (rating > 8 && rating < 10):
-      return RatingLevels.VERY_GOOD;
+      return RatingLevel.VERY_GOOD;
     case (rating === 10):
-      return RatingLevels.AWESOME;
+      return RatingLevel.AWESOME;
     default:
       return ``;
   }
