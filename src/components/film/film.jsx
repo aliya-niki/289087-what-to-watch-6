@@ -1,7 +1,6 @@
 import React from 'react';
 import {Link, useHistory, useParams} from 'react-router-dom';
 import {useSelector} from 'react-redux';
-import {AppRoute} from '../../const';
 import {getIsAuthorized} from '../../store/user/selectors';
 import {getFilmById, getSimilarFilms} from '../../store/data/selectors';
 
@@ -10,6 +9,7 @@ import NotFoundPage from '../not-found-page/not-found-page';
 import Tabs from '../tabs/tabs';
 import Header from '../header/header';
 import Footer from '../footer/footer';
+import AddToFavorites from '../add-to-favorites/add-to-favorites';
 
 const Film = () => {
   const {id} = useParams();
@@ -20,7 +20,6 @@ const Film = () => {
 
   const history = useHistory();
   const handleOnPlayClick = () => history.push(`/player/${id}`);
-  const handleOnMyListClick = () => history.push(AppRoute.MY_LIST);
 
   if (!film) {
     return <NotFoundPage />;
@@ -54,12 +53,7 @@ const Film = () => {
                   </svg>
                   <span>Play</span>
                 </button>
-                <button className="btn btn--list movie-card__button" type="button" onClick={handleOnMyListClick}>
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
-                  <span>My list</span>
-                </button>
+                <AddToFavorites id={Number(id)}/>
                 { isAuthorized &&
                   <Link to={`/films/${id}/review`} className="btn movie-card__button">Add review</Link>
                 }

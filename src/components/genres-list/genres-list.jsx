@@ -1,11 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {connect, useSelector} from 'react-redux';
 import {changeActiveGenre} from '../../store/app/actions';
 import {getActiveGenre} from '../../store/app/selectors';
 import {getGenres} from '../../store/data/selectors';
 
-const GenresList = ({activeGenre, onGenreChange, genres}) => {
+const GenresList = ({onGenreChange}) => {
+  const activeGenre = useSelector(getActiveGenre);
+  const genres = useSelector(getGenres);
+
   const handleActiveGenreChange = (evt) => {
     evt.preventDefault();
     const genre = evt.target.textContent;
@@ -26,21 +29,12 @@ const GenresList = ({activeGenre, onGenreChange, genres}) => {
 };
 
 GenresList.propTypes = {
-  genres: PropTypes.array.isRequired,
-  activeGenre: PropTypes.string.isRequired,
   onGenreChange: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  activeGenre: getActiveGenre(state),
-  genres: getGenres(state),
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onGenreChange(genre) {
-    dispatch(changeActiveGenre(genre));
-  }
-});
+const mapDispatchToProps = {
+  onGenreChange: changeActiveGenre,
+};
 
 export {GenresList};
-export default connect(mapStateToProps, mapDispatchToProps)(GenresList);
+export default connect(null, mapDispatchToProps)(GenresList);

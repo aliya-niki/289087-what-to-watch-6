@@ -1,33 +1,40 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import PropTypes from 'prop-types';
 import {useParams} from 'react-router-dom';
-import {connect} from 'react-redux';
+import {connect, useSelector} from 'react-redux';
 import {sendReview} from '../../store/data/operations';
-import {ReviewPostStatus} from '../../const';
+import {ReviewPostStatus, ReviewParameter} from '../../const';
 import {getReviewPostStatus} from '../../store/data/selectors';
+import RatingInput from '../rating-input/rating-input';
+import ReviewTextarea from '../review-textarea/review-textarea';
 
-const RATING_STARS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-const DEFAULT_RATING = 2;
-const COMMENT_MAX_LENGTH = 400;
-const COMMENT_MIN_LENGTH = 50;
-
-const AddReviewForm = ({onSubmit, reviewPostStatus}) => {
-  const [rating, setRating] = useState(DEFAULT_RATING);
+const AddReviewForm = ({onReviewSubmit}) => {
+  const [rating, setRating] = useState(ReviewParameter.DEFAULT_RATING);
   const [comment, setComment] = useState(``);
   const {id} = useParams();
 
+  const reviewPostStatus = useSelector(getReviewPostStatus);
+
   useEffect(() => {
     if (reviewPostStatus === ReviewPostStatus.LOADED) {
-      setRating(DEFAULT_RATING);
+      setRating(ReviewParameter.DEFAULT_RATING);
       setComment(``);
     }
   }, [reviewPostStatus]);
 
-  const handleRatingChange = ({target}) => setRating(target.value);
-  const handleCommentChange = ({target}) => setComment(target.value);
+  const handleRatingChange = useCallback(
+      ({target}) => setRating(target.value),
+      [rating]
+  );
+
+  const handleCommentChange = useCallback(
+      ({target}) => setComment(target.value),
+      [comment]
+  );
+
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    onSubmit(id, rating, comment);
+    onReviewSubmit(id, rating, comment);
   };
 
   return (
@@ -36,43 +43,22 @@ const AddReviewForm = ({onSubmit, reviewPostStatus}) => {
       className="add-review__form"
       onSubmit={handleSubmit}
     >
-      <div className="rating">
-        <div className="rating__stars">
-          {RATING_STARS.map((starsNumber) => (
-            <React.Fragment key={starsNumber}>
-              <input className="rating__input"
-                id={`star-${starsNumber}`}
-                type="radio"
-                name="rating"
-                value={starsNumber}
-                defaultChecked={starsNumber === DEFAULT_RATING}
-                onChange={handleRatingChange}
-                disabled={reviewPostStatus === ReviewPostStatus.LOADING} />
-              <label className="rating__label" htmlFor={`star-${starsNumber}`}>Rating {starsNumber}</label>
-            </React.Fragment>
-          ))}
-        </div>
-      </div>
+      <RatingInput
+        onRatingChange={handleRatingChange}
+        disabled={reviewPostStatus === ReviewPostStatus.LOADING}/>
 
       <div className="add-review__text">
-        <textarea className="add-review__textarea"
-          name="review-text"
-          id="review-text"
-          placeholder="Review text"
-          onChange={handleCommentChange}
-          maxLength={COMMENT_MAX_LENGTH}
-          minLength={COMMENT_MIN_LENGTH}
-          disabled={reviewPostStatus === ReviewPostStatus.LOADING}>
-        </textarea>
+        <ReviewTextarea
+          onCommentChange={handleCommentChange}
+          disabled={reviewPostStatus === ReviewPostStatus.LOADING}/>
 
         <div className="add-review__submit">
           <button
             className="add-review__btn"
             type="submit"
-            disabled={comment.length < COMMENT_MIN_LENGTH ||
-              comment.length > COMMENT_MAX_LENGTH ||
-              reviewPostStatus === ReviewPostStatus.LOADING}
-          >
+            disabled={comment.length < ReviewParameter.COMMENT_MIN_LENGTH ||
+              comment.length > ReviewParameter.COMMENT_MAX_LENGTH ||
+              reviewPostStatus === ReviewPostStatus.LOADING}>
             Post
           </button>
         </div>
@@ -87,19 +73,12 @@ const AddReviewForm = ({onSubmit, reviewPostStatus}) => {
 };
 
 AddReviewForm.propTypes = {
-  reviewPostStatus: PropTypes.string,
-  onSubmit: PropTypes.func,
+  onReviewSubmit: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  reviewPostStatus: getReviewPostStatus(state),
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onSubmit(id, rating, comment) {
-    dispatch(sendReview(id, rating, comment));
-  }
-});
+const mapDispatchToProps = {
+  onReviewSubmit: sendReview
+};
 
 export {AddReviewForm};
-export default connect(mapStateToProps, mapDispatchToProps)(AddReviewForm);
+export default connect(null, mapDispatchToProps)(AddReviewForm);
