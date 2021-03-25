@@ -1,14 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {useDispatch, useSelector} from 'react-redux';
+import {connect, useSelector} from 'react-redux';
 import {addToFavorite} from '../../store/data/operations';
 import {getIsAuthorized} from '../../store/user/selectors';
 import {AppRoute} from '../../const';
 import {useHistory} from 'react-router';
 import {getFavorites} from '../../store/data/selectors';
 
-const AddToFavorites = ({id}) => {
-  const dispatch = useDispatch();
+const AddToFavorites = ({id, onAddToFavorite}) => {
   const isAuthorized = useSelector(getIsAuthorized);
   const history = useHistory();
   const favorites = useSelector(getFavorites);
@@ -21,21 +20,32 @@ const AddToFavorites = ({id}) => {
       return;
     }
 
-    dispatch(addToFavorite(id, !isInFavorites));
+    onAddToFavorite(id, !isInFavorites);
   };
 
   return (
     <button className="btn btn--list movie-card__button" type="button" onClick={handleOnMyListClick}>
-      <svg viewBox="0 0 19 20" width="19" height="20">
-        <use xlinkHref="#add"></use>
-      </svg>
-      <span>{isInFavorites ? `In my list` : `My list`}</span>
+      {isInFavorites
+        ? <svg viewBox="0 0 18 14" width="18" height="14">
+          <use xlinkHref="#in-list"></use>
+        </svg>
+        : <svg viewBox="0 0 19 20" width="19" height="20">
+          <use xlinkHref="#add"></use>
+        </svg>
+      }
+      <span>My list</span>
     </button>
   );
 };
 
 AddToFavorites.propTypes = {
   id: PropTypes.number.isRequired,
+  onAddToFavorite: PropTypes.func.isRequired,
 };
 
-export default AddToFavorites;
+const mapDispatchToProps = {
+  onAddToFavorite: addToFavorite,
+};
+
+export {AddToFavorites};
+export default connect(null, mapDispatchToProps)(AddToFavorites);

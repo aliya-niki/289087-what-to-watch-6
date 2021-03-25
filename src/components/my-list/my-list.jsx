@@ -1,5 +1,6 @@
 import React, {useEffect} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import PropTypes from 'prop-types';
+import {connect, useSelector} from 'react-redux';
 import MoviesList from '../movies-list/movies-list';
 import Header from '../header/header';
 import Footer from '../footer/footer';
@@ -7,14 +8,12 @@ import {getFavorites} from '../../store/data/selectors';
 import {logout} from '../../store/user/operations';
 import {fetchFavorites} from '../../store/data/operations';
 
-const MyList = () => {
-  const dispatch = useDispatch();
-
+const MyList = ({onLogout, onFetchFavorites}) => {
   useEffect(() => {
-    dispatch(fetchFavorites());
+    onFetchFavorites();
 
     return () => {
-      dispatch(logout());
+      onLogout();
     };
   }, []);
 
@@ -37,4 +36,15 @@ const MyList = () => {
   );
 };
 
-export default MyList;
+MyList.propTypes = {
+  onLogout: PropTypes.func.isRequired,
+  onFetchFavorites: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = {
+  onLogout: logout,
+  onFetchFavorites: fetchFavorites
+};
+
+export {MyList};
+export default connect(null, mapDispatchToProps)(MyList);

@@ -1,22 +1,21 @@
 import React, {useEffect} from 'react';
+import PropTypes from 'prop-types';
 import {Link, useParams} from 'react-router-dom';
-import {useDispatch, useSelector} from 'react-redux';
+import {connect, useSelector} from 'react-redux';
 import AddReviewForm from '../add-review-form/add-review-form';
 import NotFoundPage from '../not-found-page/not-found-page';
 import Header from '../header/header';
 import {getFilmById} from '../../store/data/selectors';
 import {logout} from '../../store/user/operations';
 
-const AddReview = () => {
+const AddReview = ({onLogout}) => {
   const {id} = useParams();
 
   const film = useSelector((state) => getFilmById(state, id));
 
-  const dispatch = useDispatch();
-
   useEffect(() => {
     return () => {
-      dispatch(logout());
+      onLogout();
     };
   }, []);
 
@@ -59,4 +58,13 @@ const AddReview = () => {
   );
 };
 
-export default AddReview;
+AddReview.propTypes = {
+  onLogout: PropTypes.func,
+};
+
+const mapDispatchToProps = {
+  onLogout: logout,
+};
+
+export {AddReview};
+export default connect(null, mapDispatchToProps)(AddReview);

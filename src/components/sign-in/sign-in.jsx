@@ -1,25 +1,25 @@
 import React, {useRef, useState} from 'react';
+import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
-import {useDispatch, useSelector} from 'react-redux';
+import {connect, useSelector} from 'react-redux';
 import {login} from '../../store/user/operations';
 import {AppRoute} from '../../const';
 import Footer from '../footer/footer';
 import {getAuthorizationError} from '../../store/user/selectors';
 
-const SignIn = () => {
+const SignIn = ({onLogin}) => {
   const [isEmailValid, setEmailValidity] = useState(true);
   const loginRef = useRef();
   const passwordRef = useRef();
-  const dispatch = useDispatch();
   const authorizationError = useSelector(getAuthorizationError);
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
 
-    dispatch(login({
+    onLogin({
       login: loginRef.current.value,
       password: passwordRef.current.value,
-    }));
+    });
   };
 
   return (
@@ -81,4 +81,14 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+SignIn.propTypes = {
+  onLogin: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = {
+  onLogin: login,
+};
+
+export {SignIn};
+export default connect(null, mapDispatchToProps)(SignIn);
+

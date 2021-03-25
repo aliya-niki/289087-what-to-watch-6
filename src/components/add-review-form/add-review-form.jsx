@@ -1,19 +1,18 @@
 import React, {useState, useEffect, useCallback} from 'react';
+import PropTypes from 'prop-types';
 import {useParams} from 'react-router-dom';
-import {useDispatch, useSelector} from 'react-redux';
+import {connect, useSelector} from 'react-redux';
 import {sendReview} from '../../store/data/operations';
 import {ReviewPostStatus, ReviewParameter} from '../../const';
 import {getReviewPostStatus} from '../../store/data/selectors';
 import RatingInput from '../rating-input/rating-input';
 import ReviewTextarea from '../review-textarea/review-textarea';
-import {setReviewPostStatus} from '../../store/data/actions';
 
-const AddReviewForm = () => {
+const AddReviewForm = ({onReviewSubmit}) => {
   const [rating, setRating] = useState(ReviewParameter.DEFAULT_RATING);
   const [comment, setComment] = useState(``);
   const {id} = useParams();
 
-  const dispatch = useDispatch();
   const reviewPostStatus = useSelector(getReviewPostStatus);
 
   useEffect(() => {
@@ -22,12 +21,6 @@ const AddReviewForm = () => {
       setComment(``);
     }
   }, [reviewPostStatus]);
-
-  useEffect(() => {
-    return () => {
-      dispatch(setReviewPostStatus(ReviewPostStatus.PENDING));
-    };
-  }, []);
 
   const handleRatingChange = useCallback(
       ({target}) => setRating(target.value),
@@ -41,7 +34,7 @@ const AddReviewForm = () => {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    dispatch(sendReview(id, rating, comment));
+    onReviewSubmit(id, rating, comment);
   };
 
   return (
@@ -79,4 +72,13 @@ const AddReviewForm = () => {
   );
 };
 
-export default AddReviewForm;
+AddReviewForm.propTypes = {
+  onReviewSubmit: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = {
+  onReviewSubmit: sendReview
+};
+
+export {AddReviewForm};
+export default connect(null, mapDispatchToProps)(AddReviewForm);

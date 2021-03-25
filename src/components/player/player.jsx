@@ -4,6 +4,7 @@ import {useSelector} from 'react-redux';
 import NotFoundPage from '../not-found-page/not-found-page';
 import {getFilmById} from '../../store/data/selectors';
 import {convertSecondsToHHMMss, SECONDS_IN_MINUTE} from '../../utils';
+import {AppRoute} from '../../const';
 
 const Player = () => {
   const {id} = useParams();
@@ -35,7 +36,12 @@ const Player = () => {
     videoRef.current.pause();
     videoRef.current.currentTime = 0;
     videoRef.current.src = videoLink;
-    history.goBack();
+
+    if (history.length > 1) {
+      history.goBack();
+      return;
+    }
+    history.push(AppRoute.MAIN);
   };
 
   const handlePlayPauseClick = () => {
