@@ -54,6 +54,7 @@ const SignIn = ({onLogin}) => {
                 id="user-email"
                 required
                 onInvalid={() => setEmailValidity(false)}
+                data-testid="email"
               />
               <label className="sign-in__label visually-hidden" htmlFor="user-email">Email address</label>
             </div>
@@ -66,6 +67,7 @@ const SignIn = ({onLogin}) => {
                 name="user-password"
                 id="user-password"
                 required
+                data-testid="password"
               />
               <label className="sign-in__label visually-hidden" htmlFor="user-password">Password</label>
             </div>

@@ -2,9 +2,9 @@ import React, {useState, useEffect, memo} from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import {filmPropsValidation} from '../../props-validation';
-import VideoPlayer from '../preview-player/preview-player';
+import PreviewPlayer from '../preview-player/preview-player';
 
-const PREVIEW_VIDEO_PLAYER_TIMEOUT = 1000;
+const PREVIEW_PLAYER_TIMEOUT = 1000;
 
 const MovieCard = ({film, onHover, isActive}) => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -20,14 +20,14 @@ const MovieCard = ({film, onHover, isActive}) => {
   };
 
   useEffect(() => {
-    const previewVideoPlayerTimeout = setTimeout(() => {
+    const previewPlayerTimeout = setTimeout(() => {
       if (isActive) {
         setIsPlaying(true);
       }
-    }, PREVIEW_VIDEO_PLAYER_TIMEOUT);
+    }, PREVIEW_PLAYER_TIMEOUT);
 
     return () => {
-      clearTimeout(previewVideoPlayerTimeout);
+      clearTimeout(previewPlayerTimeout);
     };
   }, [isActive]);
 
@@ -38,7 +38,7 @@ const MovieCard = ({film, onHover, isActive}) => {
       <Link to={`/films/${id}`} className="small-movie-card__link">
         <div className="small-movie-card__image">
           { isActive
-            ? <VideoPlayer poster={previewImage} src={previewVideoLink} isPlaying={isPlaying}/>
+            ? <PreviewPlayer poster={previewImage} src={previewVideoLink} isPlaying={isPlaying}/>
             : <img src={previewImage} alt={name} width="280" height="175" />
           }
         </div>

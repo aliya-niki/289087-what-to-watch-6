@@ -4,7 +4,7 @@ import MovieOverview from '../movie-overview/movie-overview';
 import MovieDetails from '../movie-details/movie-details';
 import MovieReviews from '../movie-reviews/movie-reviews';
 
-const MovieCardTabs = {
+export const MovieCardTabs = {
   OVERVIEW: `Overview`,
   DETAILS: `Details`,
   REVIEWS: `Reviews`
@@ -39,7 +39,8 @@ const Tabs = ({film}) => {
               <a href="#"
                 className="movie-nav__link"
                 data-value={tab}
-                onClick={handleOnTabClick}>
+                onClick={handleOnTabClick}
+                data-testid={tab}>
                 {tab}
               </a>
             </li>)}

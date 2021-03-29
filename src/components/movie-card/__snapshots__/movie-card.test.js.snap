@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MovieCard should render correctly if card is active 1`] = `
+<div>
+  <article
+    class="small-movie-card catalog__movies-card"
+  >
+    <a
+      class="small-movie-card__link"
+      href="/films/2"
+    >
+      <div
+        class="small-movie-card__image"
+      >
+        <video
+          height="175"
+          poster="img/bohemian-rhapsody.jpg"
+          src="https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4"
+          width="280"
+        />
+      </div>
+      <h3
+        class="small-movie-card__title"
+      >
+        Bohemian Rhapsody
+      </h3>
+    </a>
+  </article>
+</div>
+`;
+
+exports[`MovieCard should render correctly if card isn't active 1`] = `
+<div>
+  <article
+    class="small-movie-card catalog__movies-card"
+  >
+    <a
+      class="small-movie-card__link"
+      href="/films/2"
+    >
+      <div
+        class="small-movie-card__image"
+      >
+        <img
+          alt="Bohemian Rhapsody"
+          height="175"
+          src="img/bohemian-rhapsody.jpg"
+          width="280"
+        />
+      </div>
+      <h3
+        class="small-movie-card__title"
+      >
+        Bohemian Rhapsody
+      </h3>
+    </a>
+  </article>
+</div>
+`;

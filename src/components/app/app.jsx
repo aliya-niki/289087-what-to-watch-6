@@ -1,7 +1,6 @@
 import React from 'react';
-import {Switch, Route, Router as BrowserRouter} from 'react-router-dom';
+import {Switch, Route} from 'react-router-dom';
 import {useSelector} from 'react-redux';
-import browserHistory from '../../browser-history';
 import Main from '../main/main';
 import SignIn from '../sign-in/sign-in';
 import MyList from '../my-list/my-list';
@@ -24,33 +23,31 @@ const App = () => {
   }
 
   return (
-    <BrowserRouter history={browserHistory}>
-      <Switch>
-        <Route exact path={AppRoute.MAIN}>
-          <Main />
-        </Route>
-        <Route exact path={AppRoute.LOGIN}>
-          <SignIn />
-        </Route>
-        <PrivateRoute exact
-          path={AppRoute.MY_LIST}
-          render={() => <MyList />}>
-        </PrivateRoute>
-        <Route exact path={AppRoute.FILM}>
-          <Film />
-        </Route>
-        <PrivateRoute exact
-          path={AppRoute.REVIEW}
-          render={() => <AddReview />}>
-        </PrivateRoute>
-        <Route exact path={AppRoute.PLAYER}>
-          <Player />
-        </Route>
-        <Route>
-          <NotFoundPage />
-        </Route>
-      </Switch>
-    </BrowserRouter>
+    <Switch>
+      <Route exact path={AppRoute.MAIN}>
+        <Main />
+      </Route>
+      <Route exact path={AppRoute.LOGIN}>
+        <SignIn />
+      </Route>
+      <PrivateRoute exact
+        path={AppRoute.MY_LIST}
+        render={() => <MyList />}>
+      </PrivateRoute>
+      <Route exact path={AppRoute.FILM}>
+        <Film />
+      </Route>
+      <PrivateRoute exact
+        path={AppRoute.REVIEW}
+        render={() => <AddReview />}>
+      </PrivateRoute>
+      <Route exact path={AppRoute.PLAYER}>
+        <Player />
+      </Route>
+      <Route>
+        <NotFoundPage />
+      </Route>
+    </Switch>
   );
 };
 

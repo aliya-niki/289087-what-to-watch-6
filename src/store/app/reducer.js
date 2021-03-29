@@ -1,7 +1,7 @@
 import {ActionType} from './actions';
 import {DEFAULT_ACTIVE_GENRE} from '../../const';
 
-const initialState = {
+export const initialState = {
   activeGenre: DEFAULT_ACTIVE_GENRE,
 };
 

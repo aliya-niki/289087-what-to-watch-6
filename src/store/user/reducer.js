@@ -1,6 +1,6 @@
 import {ActionType} from './actions';
 
-const initialState = {
+export const initialState = {
   userAuthorizationInfo: null,
   authorizationError: false,
 };

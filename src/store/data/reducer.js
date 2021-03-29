@@ -1,7 +1,7 @@
 import {ActionType} from './actions';
 import {ReviewPostStatus} from '../../const';
 
-const initialState = {
+export const initialState = {
   films: [],
   promo: null,
   favorites: [],
