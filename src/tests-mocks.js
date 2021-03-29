@@ -166,23 +166,5 @@ export const reviews = [
     rating: 4,
     comment: `The mannered, madcap proceedings are often delightful, occasionally silly, and here and there, gruesome and/or heartbreaking.`,
     date: `2019-05-08T14:13:56.569Z`
-  }, {
-    id: 5,
-    user: {
-      id: 23,
-      name: `Kate Pitt`
-    },
-    rating: 5,
-    comment: `It is certainly a magical and childlike way of storytelling, even if the content is a little more adult.`,
-    date: `2019-05-08T14:13:56.569Z`
-  }, {
-    id: 6,
-    user: {
-      id: 112,
-      name: `Kate Waterston`
-    },
-    rating: 6,
-    comment: `Discerning travellers and Wes Anderson fans will luxuriate in the glorious Mittel-European kitsch of one of the director's funniest and most exquisitely designed movies in years.`,
-    date: `2019-05-08T14:13:56.569Z`
   }
 ];
