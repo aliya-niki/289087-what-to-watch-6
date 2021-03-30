@@ -3,7 +3,8 @@ import {
   loadPromo,
   loadFavorites,
   setReviewPostStatus,
-  ActionType
+  setServerError,
+  ActionType,
 } from './actions';
 
 const simpleMock = `test`;
@@ -45,4 +46,12 @@ describe(`Action creators work correctly`, () => {
     expect(setReviewPostStatus(simpleMock)).toEqual(expectedAction);
   });
 
+  it(`Action creator for setting server error returns correct action`, () => {
+    const expectedAction = {
+      type: ActionType.SET_SERVER_ERROR,
+      payload: simpleMock,
+    };
+
+    expect(setServerError(simpleMock)).toEqual(expectedAction);
+  });
 });

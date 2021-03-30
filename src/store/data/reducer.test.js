@@ -82,4 +82,24 @@ describe(`Reducer should work correctly`, () => {
         reviewPostStatus: ReviewPostStatus.LOADED,
       });
   });
+
+  it(`Reducer should update isServerError correctly`, () => {
+    expect(reducer({
+      films: [],
+      promo: null,
+      favorites: [],
+      reviewPostStatus: ReviewPostStatus.PENDING,
+      isServerError: false,
+    }, {
+      type: ActionType.SET_SERVER_ERROR,
+      payload: true,
+    }))
+      .toEqual({
+        films: [],
+        promo: null,
+        favorites: [],
+        reviewPostStatus: ReviewPostStatus.PENDING,
+        isServerError: true,
+      });
+  });
 });
