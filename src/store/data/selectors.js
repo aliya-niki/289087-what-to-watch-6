@@ -10,6 +10,7 @@ export const getPromo = (state) => state[NameSpace.DATA].promo;
 export const getIsDataLoaded = (state) => !!state[NameSpace.DATA].films.length && !!state[NameSpace.DATA].promo;
 export const getFavorites = (state) => state[NameSpace.DATA].favorites;
 export const getReviewPostStatus = (state) => state[NameSpace.DATA].reviewPostStatus;
+export const getIsServerError = (state) => state[NameSpace.DATA].isServerError;
 
 export const getGenres = createSelector(
     getFilms,

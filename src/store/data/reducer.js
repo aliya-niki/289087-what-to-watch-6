@@ -1,11 +1,12 @@
 import {ActionType} from './actions';
 import {ReviewPostStatus} from '../../const';
 
-const initialState = {
+export const initialState = {
   films: [],
   promo: null,
   favorites: [],
   reviewPostStatus: ReviewPostStatus.PENDING,
+  isServerError: false,
 };
 
 export const reducer = (state = initialState, action) => {
@@ -29,6 +30,11 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         reviewPostStatus: action.payload,
+      };
+    case ActionType.SET_SERVER_ERROR:
+      return {
+        ...state,
+        isServerError: action.payload,
       };
   }
   return state;

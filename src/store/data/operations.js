@@ -1,4 +1,4 @@
-import {loadFilms, loadPromo, loadFavorites, setReviewPostStatus} from './actions';
+import {loadFilms, loadPromo, loadFavorites, setReviewPostStatus, setServerError} from './actions';
 import {redirectToRoute} from '../middlewares/actions';
 import {ReviewPostStatus, APIRoute} from '../../const';
 import {adaptDataToFilm} from '../../services/adapters';
@@ -8,6 +8,7 @@ const REVIEW_POST_STATUS_TIMEOUT = 5000;
 export const fetchFilmsList = () => (dispatch, _getState, api) => (
   api.get(APIRoute.FILMS)
     .then(({data}) => dispatch(loadFilms(data.map(adaptDataToFilm))))
+    .catch(() => dispatch(setServerError(true)))
 );
 
 export const fetchPromo = () => (dispatch, _getState, api) => (

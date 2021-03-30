@@ -1,7 +1,7 @@
 import React, {useRef, useEffect} from 'react';
 import PropTypes from 'prop-types';
 
-const VideoPlayer = ({isPlaying, src, poster}) => {
+const PreviewPlayer = ({isPlaying, src, poster}) => {
   const videoRef = useRef();
 
   useEffect(() => {
@@ -10,23 +10,25 @@ const VideoPlayer = ({isPlaying, src, poster}) => {
     } else {
       videoRef.current.load();
     }
-  }, [isPlaying]);
+  }, [isPlaying, src]);
 
   return (
-    <video src={src}
-      ref={videoRef}
-      poster={poster}
+    <video
+      height="175"
       muted
-      width="280" height="175"
+      poster={poster}
+      ref={videoRef}
+      src={src}
+      width="280"
     >
     </video>
   );
 };
 
-VideoPlayer.propTypes = {
+PreviewPlayer.propTypes = {
   isPlaying: PropTypes.bool.isRequired,
   src: PropTypes.string.isRequired,
   poster: PropTypes.string.isRequired,
 };
 
-export default VideoPlayer;
+export default PreviewPlayer;

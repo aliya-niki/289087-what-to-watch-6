@@ -1,8 +1,9 @@
 export const ActionType = {
   LOAD_FILMS: `data/loadFilms`,
   LOAD_PROMO: `data/loadPromo`,
-  SET_REVIEW_POST_STATUS: `data/setReviewPostStatus`,
   LOAD_FAVORITES: `data/loadFavorites`,
+  SET_REVIEW_POST_STATUS: `data/setReviewPostStatus`,
+  SET_SERVER_ERROR: `data/setServerError`,
 };
 
 export const loadFilms = (films) => ({
@@ -22,5 +23,10 @@ export const loadFavorites = (films) => ({
 
 export const setReviewPostStatus = (status) => ({
   type: ActionType.SET_REVIEW_POST_STATUS,
+  payload: status,
+});
+
+export const setServerError = (status) => ({
+  type: ActionType.SET_SERVER_ERROR,
   payload: status,
 });

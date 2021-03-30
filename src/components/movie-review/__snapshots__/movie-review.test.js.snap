@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MovieReview should render correctly 1`] = `
+<div>
+  <div
+    class="review"
+  >
+    <blockquote
+      class="review__quote"
+    >
+      <p
+        class="review__text"
+      >
+        Anderson's films are too precious for some, but for those of us willing to lose ourselves in them, they're a delight. "The Grand Budapest Hotel" is no different, except that he has added a hint of gravitas to the mix, improving the recipe.
+      </p>
+      <footer
+        class="review__details"
+      >
+        <cite
+          class="review__author"
+        >
+          Kate Muir
+        </cite>
+        <time
+          class="review__date"
+          datetime="2019-05-08"
+        >
+          May 8, 2019
+        </time>
+      </footer>
+    </blockquote>
+    <div
+      class="review__rating"
+    >
+      6
+    </div>
+  </div>
+</div>
+`;

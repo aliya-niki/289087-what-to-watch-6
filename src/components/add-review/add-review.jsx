@@ -59,7 +59,7 @@ const AddReview = ({onLogout}) => {
 };
 
 AddReview.propTypes = {
-  onLogout: PropTypes.func,
+  onLogout: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = {
