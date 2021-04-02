@@ -1,11 +1,11 @@
 import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {connect, useSelector} from 'react-redux';
+import {getFavoritesSelector} from '../../store/favorites/selectors';
+import {fetchFavorites} from '../../store/favorites/operations';
 import MoviesList from '../movies-list/movies-list';
 import Header from '../header/header';
 import Footer from '../footer/footer';
-import {getFavoritesSelector} from '../../store/data/selectors';
-import {fetchFavorites} from '../../store/data/operations';
 
 const MyList = ({onFetchFavorites}) => {
   useEffect(() => {

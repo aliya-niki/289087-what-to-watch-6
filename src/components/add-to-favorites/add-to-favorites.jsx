@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect, useSelector} from 'react-redux';
 import {useHistory} from 'react-router';
-import {addToFavorite} from '../../store/data/operations';
 import {AppRoute} from '../../const';
+import {addToFavorite} from '../../store/favorites/operations';
+import {getFavoritesSelector} from '../../store/favorites/selectors';
 import {getIsAuthorizedSelector} from '../../store/user/selectors';
-import {getFavoritesSelector} from '../../store/data/selectors';
 
 const AddToFavorites = ({id, onAddToFavorite}) => {
   const isAuthorized = useSelector(getIsAuthorizedSelector);

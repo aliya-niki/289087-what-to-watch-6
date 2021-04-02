@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {useSelector} from 'react-redux';
 import {Link, useHistory} from 'react-router-dom';
-import {MOVIES_NUMBER_PER_STEP} from '../../const';
+import {MOVIES_NUMBER_PER_STEP, AppRoute} from '../../const';
 import {getActiveGenreSelector, getFilmsFilteredByGenreSelector} from '../../store/app/selectors';
 import {getPromoSelector} from '../../store/data/selectors';
 import MoviesList from '../movies-list/movies-list';
@@ -24,7 +24,7 @@ const Main = () => {
 
   const history = useHistory();
   const handleOnPlayClick = () => {
-    history.push(`/player/${id}`);
+    history.push(AppRoute.PLAYER.replace(`:id`, id));
   };
 
   const handleShowMoreClick = () => {
@@ -47,7 +47,7 @@ const Main = () => {
 
         <div className="movie-card__wrap">
           <div className="movie-card__info">
-            <Link to={`/films/${id}`}>
+            <Link to={AppRoute.FILM.replace(`:id`, id)}>
               <div className="movie-card__poster">
                 <img src={posterImage} alt={`${name} poster`} width="218" height="327" />
               </div>

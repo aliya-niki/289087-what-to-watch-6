@@ -17,9 +17,8 @@ it(`MyList should render correctly`, () => {
       authorizationError: false,
       userAuthorizationInfo: authAdapted,
     },
-    [NameSpace.DATA]: {
+    [NameSpace.FAVORITES]: {
       favorites: filmsAdapted,
-      films: filmsAdapted,
     }
   });
 

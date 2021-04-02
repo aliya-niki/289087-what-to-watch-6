@@ -3,7 +3,7 @@ import {Link, useHistory, useParams} from 'react-router-dom';
 import {useSelector} from 'react-redux';
 import {getIsAuthorizedSelector} from '../../store/user/selectors';
 import {getFilmByIdSelector, getSimilarFilmsSelector} from '../../store/data/selectors';
-
+import {AppRoute} from '../../const';
 import MoviesList from '../movies-list/movies-list';
 import NotFoundPage from '../not-found-page/not-found-page';
 import Tabs from '../tabs/tabs';
@@ -19,7 +19,7 @@ const Film = () => {
   const isAuthorized = useSelector((state) => getIsAuthorizedSelector(state));
 
   const history = useHistory();
-  const handleOnPlayClick = () => history.push(`/player/${id}`);
+  const handleOnPlayClick = () => history.push(AppRoute.PLAYER.replace(`:id`, id));
 
   useEffect(() => {
     window.scrollTo({
@@ -63,7 +63,7 @@ const Film = () => {
                 </button>
                 <AddToFavorites id={Number(id)}/>
                 { isAuthorized &&
-                  <Link to={`/films/${id}/review`} className="btn movie-card__button">Add review</Link>
+                  <Link to={AppRoute.REVIEW.replace(`:id`, id)} className="btn movie-card__button">Add review</Link>
                 }
               </div>
             </div>

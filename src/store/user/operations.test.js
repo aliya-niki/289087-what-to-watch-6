@@ -2,7 +2,7 @@ import MockAdapter from 'axios-mock-adapter';
 import {createAPI} from '../../services/api';
 import {ActionType} from './actions';
 import {ActionType as MiddlewaresActionType} from '../middlewares/actions';
-import {ActionType as DataActionType} from '../data/actions';
+import {ActionType as FavoritesActionType} from '../favorites/actions';
 import {checkAuth, login, logout} from './operations';
 import {APIRoute, AppRoute} from '../../const';
 import {authRaw, authAdapted, user} from '../../tests-mocks';
@@ -73,7 +73,7 @@ describe(`Async operation work correctly`, () => {
           payload: null,
         });
         expect(dispatch).toHaveBeenNthCalledWith(2, {
-          type: DataActionType.LOAD_FAVORITES,
+          type: FavoritesActionType.LOAD_FAVORITES,
           payload: [],
         });
         expect(dispatch).toHaveBeenNthCalledWith(3, {

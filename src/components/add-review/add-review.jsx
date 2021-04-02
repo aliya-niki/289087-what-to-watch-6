@@ -1,10 +1,11 @@
 import React from 'react';
 import {Link, useParams} from 'react-router-dom';
 import {useSelector} from 'react-redux';
+import {getFilmByIdSelector} from '../../store/data/selectors';
+import {AppRoute} from '../../const';
 import AddReviewForm from '../add-review-form/add-review-form';
 import NotFoundPage from '../not-found-page/not-found-page';
 import Header from '../header/header';
-import {getFilmByIdSelector} from '../../store/data/selectors';
 
 const AddReview = () => {
   const {id} = useParams();
@@ -30,7 +31,7 @@ const AddReview = () => {
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <Link to={`/films/${id}`} className="breadcrumbs__link">{name}</Link>
+                <Link to={AppRoute.FILM.replace(`:id`, id)} className="breadcrumbs__link">{name}</Link>
               </li>
               <li className="breadcrumbs__item">
                 <a className="breadcrumbs__link">Add review</a>
