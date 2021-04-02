@@ -20,9 +20,11 @@ describe(`AddToFavorites button`, () => {
         userAuthorizationInfo: authAdapted,
       },
       [NameSpace.DATA]: {
-        favorites: [],
         films: filmsAdapted,
         promo: filmsAdapted[0],
+      },
+      [NameSpace.FAVORITES]: {
+        favorites: [],
       }
     });
 
@@ -46,9 +48,11 @@ describe(`AddToFavorites button`, () => {
         userAuthorizationInfo: authAdapted,
       },
       [NameSpace.DATA]: {
-        favorites: filmsAdapted,
         films: filmsAdapted,
         promo: filmsAdapted[0],
+      },
+      [NameSpace.FAVORITES]: {
+        favorites: filmsAdapted,
       }
     });
 
@@ -60,7 +64,6 @@ describe(`AddToFavorites button`, () => {
         </redux.Provider>
     );
 
-    expect(screen.getByText(/My list/i)).toBeInTheDocument();
     expect(container).toMatchSnapshot();
   });
 });

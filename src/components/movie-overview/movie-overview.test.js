@@ -6,12 +6,10 @@ import MovieOverview from './movie-overview';
 const mockFilm = filmsAdapted[0];
 
 it(`MovieOverview should render correctly`, () => {
-  const {container} = render(
+  render(
       <MovieOverview film={mockFilm}/>
   );
 
   expect(screen.getByText(mockFilm.description)).toBeInTheDocument();
   expect(screen.getByText(mockFilm.rating)).toBeInTheDocument();
-
-  expect(container).toMatchSnapshot();
 });

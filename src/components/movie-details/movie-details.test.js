@@ -6,14 +6,12 @@ import MovieDetails from './movie-details';
 const mockFilm = filmsAdapted[0];
 
 it(`MovieDetails should render correctly`, () => {
-  const {container} = render(
+  render(
       <MovieDetails film={mockFilm}/>
   );
 
   expect(screen.getByText(mockFilm.genre)).toBeInTheDocument();
   expect(screen.getByText(mockFilm.director)).toBeInTheDocument();
   expect(screen.getByText(mockFilm.released)).toBeInTheDocument();
-
-  expect(container).toMatchSnapshot();
 });
 

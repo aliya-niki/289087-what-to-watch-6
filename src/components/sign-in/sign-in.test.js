@@ -19,7 +19,7 @@ it(`SignIn should render correctly`, () => {
     }
   });
 
-  const {container} = render(
+  render(
       <redux.Provider store={store}>
         <Router history={history}>
           <SignIn />
@@ -36,6 +36,4 @@ it(`SignIn should render correctly`, () => {
 
   expect(screen.getByDisplayValue(/keks/i)).toBeInTheDocument();
   expect(screen.getByDisplayValue(/123456/i)).toBeInTheDocument();
-
-  expect(container).toMatchSnapshot();
 });

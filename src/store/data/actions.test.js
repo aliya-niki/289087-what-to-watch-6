@@ -1,8 +1,6 @@
 import {
   loadFilms,
   loadPromo,
-  loadFavorites,
-  setReviewPostStatus,
   setServerError,
   ActionType,
 } from './actions';
@@ -26,24 +24,6 @@ describe(`Action creators work correctly`, () => {
     };
 
     expect(loadPromo(simpleMock)).toEqual(expectedAction);
-  });
-
-  it(`Action creator for loading favorite films returns correct action`, () => {
-    const expectedAction = {
-      type: ActionType.LOAD_FAVORITES,
-      payload: simpleMock,
-    };
-
-    expect(loadFavorites(simpleMock)).toEqual(expectedAction);
-  });
-
-  it(`Action creator for setting review status returns correct action`, () => {
-    const expectedAction = {
-      type: ActionType.SET_REVIEW_POST_STATUS,
-      payload: simpleMock,
-    };
-
-    expect(setReviewPostStatus(simpleMock)).toEqual(expectedAction);
   });
 
   it(`Action creator for setting server error returns correct action`, () => {

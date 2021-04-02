@@ -1,11 +1,8 @@
 import {ActionType} from './actions';
-import {ReviewPostStatus} from '../../const';
 
 export const initialState = {
   films: [],
   promo: null,
-  favorites: [],
-  reviewPostStatus: ReviewPostStatus.PENDING,
   isServerError: false,
 };
 
@@ -20,16 +17,6 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         promo: action.payload,
-      };
-    case ActionType.LOAD_FAVORITES:
-      return {
-        ...state,
-        favorites: action.payload,
-      };
-    case ActionType.SET_REVIEW_POST_STATUS:
-      return {
-        ...state,
-        reviewPostStatus: action.payload,
       };
     case ActionType.SET_SERVER_ERROR:
       return {

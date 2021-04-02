@@ -10,7 +10,9 @@ const MovieReviews = ({id}) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    axios(`${BACKEND_URL}${APIRoute.COMMENTS}/${id}`)
+    axios(`${BACKEND_URL}${APIRoute.COMMENTS}/${id}`, {
+      withCredentials: true
+    })
       .then((response) => setReviews(response.data))
       .catch((err) => {
         setError(err);
@@ -21,28 +23,35 @@ const MovieReviews = ({id}) => {
   const reviewsToFirstColumn = reviews.slice(0, Math.ceil(reviews.length / 2));
   const reviewsToSecondColumn = reviews.slice(Math.ceil(reviews.length / 2));
 
-  return (
-    <React.Fragment>
-      {isLoading ? <p>Loading reviews...</p> : ``}
-      {error ? <p>There was an error when loading reviews</p> : ``}
+  if (isLoading) {
+    return <div className="review">Loading reviews...</div>;
+  }
 
-      <div className="movie-card__reviews movie-card__row">
-        <div className="movie-card__reviews-col">
-          {reviewsToFirstColumn.map((review, index) =>
-            <MovieReview
-              key={`comment-${review.user.name}-${index}`}
-              review={review} />
-          )}
-        </div>
-        <div className="movie-card__reviews-col">
-          {reviewsToSecondColumn.map((review, index) =>
-            <MovieReview
-              key={`comment-${review.user.name}-${index}`}
-              review={review} />
-          )}
-        </div>
+  if (error) {
+    return <div className="review">There was an error when loading reviews</div>;
+  }
+
+  if (!reviews.length) {
+    return <div className="review">There are no reviews yet.</div>;
+  }
+
+  return (
+    <div className="movie-card__reviews movie-card__row">
+      <div className="movie-card__reviews-col">
+        {reviewsToFirstColumn.map((review, index) =>
+          <MovieReview
+            key={`comment-${review.user.name}-${index}`}
+            review={review} />
+        )}
       </div>
-    </React.Fragment>
+      <div className="movie-card__reviews-col">
+        {reviewsToSecondColumn.map((review, index) =>
+          <MovieReview
+            key={`comment-${review.user.name}-${index}`}
+            review={review} />
+        )}
+      </div>
+    </div>
   );
 };
 

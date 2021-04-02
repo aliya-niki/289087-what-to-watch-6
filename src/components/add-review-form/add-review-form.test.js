@@ -21,6 +21,8 @@ it(`AddReviewForm should render correctly`, () => {
     [NameSpace.DATA]: {
       films: filmsAdapted,
       promo: filmsAdapted[0],
+    },
+    [NameSpace.REVIEW]: {
       reviewPostStatus: ReviewPostStatus.PENDING,
     }
   });

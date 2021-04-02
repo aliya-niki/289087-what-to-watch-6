@@ -8,23 +8,20 @@ const mockFilm = filmsAdapted[2];
 
 describe(`Tabs`, () => {
   it(`should render correctly with active 'Overview' tab`, () => {
-    const {container} = render(
+    render(
         <Tabs film={mockFilm}/>
     );
 
     expect(screen.getByText(mockFilm.description)).toBeInTheDocument();
-    expect(container).toMatchSnapshot();
   });
 
   it(`should render correctly with active 'Details' tab`, () => {
-    const {container} = render(
+    render(
         <Tabs film={mockFilm}/>
     );
 
     userEvent.click(screen.getByTestId(MovieCardTabs.DETAILS));
     expect(screen.getByText(mockFilm.genre)).toBeInTheDocument();
     expect(screen.getByText(mockFilm.director)).toBeInTheDocument();
-
-    expect(container).toMatchSnapshot();
   });
 });

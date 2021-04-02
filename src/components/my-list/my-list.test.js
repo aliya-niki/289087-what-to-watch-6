@@ -17,9 +17,8 @@ it(`MyList should render correctly`, () => {
       authorizationError: false,
       userAuthorizationInfo: authAdapted,
     },
-    [NameSpace.DATA]: {
+    [NameSpace.FAVORITES]: {
       favorites: filmsAdapted,
-      films: filmsAdapted,
     }
   });
 
@@ -27,7 +26,7 @@ it(`MyList should render correctly`, () => {
 
   store.dispatch = () => {};
 
-  const {container} = render(
+  render(
       <redux.Provider store={store}>
         <Router history={history}>
           <MyList />
@@ -38,6 +37,4 @@ it(`MyList should render correctly`, () => {
   expect(screen.getByText(/My list/i)).toBeInTheDocument();
   expect(screen.getByText(/Catalog/i)).toBeInTheDocument();
   expect(screen.getByText(filmsAdapted[0].name)).toBeInTheDocument();
-
-  expect(container).toMatchSnapshot();
 });

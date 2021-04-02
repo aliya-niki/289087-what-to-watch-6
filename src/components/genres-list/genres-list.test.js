@@ -1,5 +1,5 @@
 import React from 'react';
-import {render, screen} from '@testing-library/react';
+import {render} from '@testing-library/react';
 import configureStore from 'redux-mock-store';
 import * as redux from 'react-redux';
 import {NameSpace} from '../../store/reducer';
@@ -25,8 +25,6 @@ it(`GenresList should render correctly`, () => {
         <GenresList onGenreChange={jest.fn()}/>
       </redux.Provider>
   );
-
-  expect(screen.getByText(/All genres/i)).toBeInTheDocument();
 
   expect(container).toMatchSnapshot();
 });

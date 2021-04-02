@@ -1,5 +1,8 @@
+import get from 'lodash/get';
 import {NameSpace} from '../reducer';
 
-export const getIsAuthorized = (state) => !!state[NameSpace.USER].userAuthorizationInfo;
-export const getUserAuthorizationInfo = (state) => state[NameSpace.USER].userAuthorizationInfo;
-export const getAuthorizationError = (state) => state[NameSpace.USER].authorizationError;
+export const getIsAuthorizedSelector = (state) => !!getUserAuthorizationInfoSelector(state);
+
+export const getUserAuthorizationInfoSelector = (state) => get(state, `${NameSpace.USER}.userAuthorizationInfo`, null);
+
+export const getAuthorizationErrorSelector = (state) => get(state, `${NameSpace.USER}.authorizationError`, false);

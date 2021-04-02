@@ -1,12 +1,14 @@
 import {createSelector} from 'reselect';
+import get from 'lodash/get';
 import {NameSpace} from '../reducer';
-import {getFilms} from '../data/selectors';
+import {getFilmsSelector} from '../data/selectors';
 import {filterByGenre} from '../../utils';
+import {DEFAULT_ACTIVE_GENRE} from '../../const';
 
-export const getActiveGenre = (state) => state[NameSpace.APP].activeGenre;
+export const getActiveGenreSelector = (state) => get(state, `${NameSpace.APP}.activeGenre`, DEFAULT_ACTIVE_GENRE);
 
-export const getFilmsFilteredByGenre = createSelector(
-    [getFilms, getActiveGenre],
+export const getFilmsFilteredByGenreSelector = createSelector(
+    [getFilmsSelector, getActiveGenreSelector],
     (films, activeGenre) => {
       return filterByGenre(films, activeGenre);
     }

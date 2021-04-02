@@ -1,6 +1,8 @@
 import React from 'react';
 import {Switch, Route} from 'react-router-dom';
 import {useSelector} from 'react-redux';
+import {AppRoute} from '../../const';
+import {getIsDataLoadedSelector, getIsServerErrorSelector} from '../../store/data/selectors';
 import Main from '../main/main';
 import SignIn from '../sign-in/sign-in';
 import MyList from '../my-list/my-list';
@@ -11,12 +13,10 @@ import NotFoundPage from '../not-found-page/not-found-page';
 import LoadingScreen from '../loading-screen/loading-screen';
 import PrivateRoute from '../private-route/private-route';
 import ServerErrorScreen from '../server-error-screen/server-error-screen';
-import {AppRoute} from '../../const';
-import {getIsDataLoaded, getIsServerError} from '../../store/data/selectors';
 
 const App = () => {
-  const isDataLoaded = useSelector(getIsDataLoaded);
-  const isServerError = useSelector(getIsServerError);
+  const isDataLoaded = useSelector(getIsDataLoadedSelector);
+  const isServerError = useSelector(getIsServerErrorSelector);
 
   if (isServerError) {
     return (

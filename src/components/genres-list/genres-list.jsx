@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect, useSelector} from 'react-redux';
 import {changeActiveGenre} from '../../store/app/actions';
-import {getActiveGenre} from '../../store/app/selectors';
-import {getGenres} from '../../store/data/selectors';
+import {getActiveGenreSelector} from '../../store/app/selectors';
+import {getGenresSelector} from '../../store/data/selectors';
 
 const GenresList = ({onGenreChange}) => {
-  const activeGenre = useSelector(getActiveGenre);
-  const genres = useSelector(getGenres);
+  const activeGenre = useSelector(getActiveGenreSelector);
+  const genres = useSelector(getGenresSelector);
 
   const handleActiveGenreChange = (evt) => {
     evt.preventDefault();

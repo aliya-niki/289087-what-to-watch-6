@@ -1,51 +1,47 @@
 import MockAdapter from "axios-mock-adapter";
 import {createAPI} from "../../services/api";
 import {ActionType} from "./actions";
-import {fetchFilmsList, fetchPromo} from './operations';
+import {addToFavorite, fetchFavorites} from './operations';
 import {APIRoute} from '../../const';
 import {filmsAdapted, filmsRaw} from '../../tests-mocks';
 
 const api = createAPI(() => {});
 
-const [promoRaw] = filmsRaw;
-const [promoAdapted] = filmsAdapted;
-
 describe(`Async operations work correctly`, () => {
-  it(`Should make a correct API call to /films`, () => {
+  it(`Should make a correct API call to /favorite`, () => {
     const apiMock = new MockAdapter(api);
     const dispatch = jest.fn();
-    const filmsLoader = fetchFilmsList();
+    const favoritesLoader = fetchFavorites();
 
     apiMock
-      .onGet(APIRoute.FILMS)
+      .onGet(APIRoute.FAVORITE)
       .reply(200, filmsRaw);
 
-    return filmsLoader(dispatch, () => {}, api)
+    return favoritesLoader(dispatch, () => {}, api)
       .then(() => {
         expect(dispatch).toHaveBeenCalledTimes(1);
         expect(dispatch).toHaveBeenNthCalledWith(1, {
-          type: ActionType.LOAD_FILMS,
+          type: ActionType.LOAD_FAVORITES,
           payload: filmsAdapted,
         });
       });
   });
 
-  it(`Should make a correct API call to /promo`, () => {
+  it(`Should make a correct API call to /favorite/:id/:status with addToFavorite()`, () => {
+    const id = 1;
+    const status = true;
+
     const apiMock = new MockAdapter(api);
     const dispatch = jest.fn();
-    const promoLoader = fetchPromo();
+    const addToFavoriteLoader = addToFavorite(id, status);
 
     apiMock
-      .onGet(APIRoute.PROMO)
-      .reply(200, promoRaw);
+      .onPost(`${APIRoute.FAVORITE}/${id}/${Number(status)}`)
+      .reply(200, filmsAdapted[0]);
 
-    return promoLoader(dispatch, () => {}, api)
+    return addToFavoriteLoader(dispatch, () => {}, api)
       .then(() => {
         expect(dispatch).toHaveBeenCalledTimes(1);
-        expect(dispatch).toHaveBeenNthCalledWith(1, {
-          type: ActionType.LOAD_PROMO,
-          payload: promoAdapted,
-        });
       });
   });
 });

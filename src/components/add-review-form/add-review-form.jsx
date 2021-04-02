@@ -2,9 +2,9 @@ import React, {useState, useEffect, useCallback} from 'react';
 import PropTypes from 'prop-types';
 import {useParams} from 'react-router-dom';
 import {connect, useSelector} from 'react-redux';
-import {sendReview} from '../../store/data/operations';
 import {ReviewPostStatus, ReviewParameter} from '../../const';
-import {getReviewPostStatus} from '../../store/data/selectors';
+import {sendReview} from '../../store/review/operations';
+import {getReviewPostStatusSelector} from '../../store/review/selectors';
 import RatingInput from '../rating-input/rating-input';
 import ReviewTextarea from '../review-textarea/review-textarea';
 
@@ -13,7 +13,7 @@ const AddReviewForm = ({onReviewSubmit}) => {
   const [comment, setComment] = useState(``);
   const {id} = useParams();
 
-  const reviewPostStatus = useSelector(getReviewPostStatus);
+  const reviewPostStatus = useSelector(getReviewPostStatusSelector);
 
   useEffect(() => {
     if (reviewPostStatus === ReviewPostStatus.LOADED) {

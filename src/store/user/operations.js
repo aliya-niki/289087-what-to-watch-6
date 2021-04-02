@@ -1,5 +1,5 @@
 import {setUserInfo, setAuthorizationError} from './actions';
-import {loadFavorites} from '../data/actions';
+import {loadFavorites} from '../favorites/actions';
 import {redirectToRoute} from '../middlewares/actions';
 import {AppRoute, APIRoute} from '../../const';
 import {adaptDataToUserInfo} from '../../services/adapters';

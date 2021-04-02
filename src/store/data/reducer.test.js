@@ -1,4 +1,3 @@
-import {ReviewPostStatus} from '../../const';
 import {reducer, initialState} from './reducer';
 import {filmsAdapted} from '../../tests-mocks';
 import {ActionType} from './actions';
@@ -15,8 +14,7 @@ describe(`Reducer should work correctly`, () => {
     expect(reducer({
       films: [],
       promo: null,
-      favorites: [],
-      reviewPostStatus: ReviewPostStatus.PENDING,
+      isServerError: false,
     }, {
       type: ActionType.LOAD_FILMS,
       payload: filmsAdapted,
@@ -24,8 +22,7 @@ describe(`Reducer should work correctly`, () => {
       .toEqual({
         films: filmsAdapted,
         promo: null,
-        favorites: [],
-        reviewPostStatus: ReviewPostStatus.PENDING,
+        isServerError: false,
       });
   });
 
@@ -33,8 +30,7 @@ describe(`Reducer should work correctly`, () => {
     expect(reducer({
       films: [],
       promo: null,
-      favorites: [],
-      reviewPostStatus: ReviewPostStatus.PENDING,
+      isServerError: false,
     }, {
       type: ActionType.LOAD_PROMO,
       payload: promo,
@@ -42,44 +38,7 @@ describe(`Reducer should work correctly`, () => {
       .toEqual({
         films: [],
         promo,
-        favorites: [],
-        reviewPostStatus: ReviewPostStatus.PENDING,
-      });
-  });
-
-  it(`Reducer should update favorites by loading favorite films`, () => {
-    expect(reducer({
-      films: [],
-      promo: null,
-      favorites: [],
-      reviewPostStatus: ReviewPostStatus.PENDING,
-    }, {
-      type: ActionType.LOAD_FAVORITES,
-      payload: filmsAdapted,
-    }))
-      .toEqual({
-        films: [],
-        promo: null,
-        favorites: filmsAdapted,
-        reviewPostStatus: ReviewPostStatus.PENDING,
-      });
-  });
-
-  it(`Reducer should update reviewPostStatus correctly`, () => {
-    expect(reducer({
-      films: [],
-      promo: null,
-      favorites: [],
-      reviewPostStatus: ReviewPostStatus.PENDING,
-    }, {
-      type: ActionType.SET_REVIEW_POST_STATUS,
-      payload: ReviewPostStatus.LOADED,
-    }))
-      .toEqual({
-        films: [],
-        promo: null,
-        favorites: [],
-        reviewPostStatus: ReviewPostStatus.LOADED,
+        isServerError: false,
       });
   });
 
@@ -87,8 +46,6 @@ describe(`Reducer should work correctly`, () => {
     expect(reducer({
       films: [],
       promo: null,
-      favorites: [],
-      reviewPostStatus: ReviewPostStatus.PENDING,
       isServerError: false,
     }, {
       type: ActionType.SET_SERVER_ERROR,
@@ -97,8 +54,6 @@ describe(`Reducer should work correctly`, () => {
       .toEqual({
         films: [],
         promo: null,
-        favorites: [],
-        reviewPostStatus: ReviewPostStatus.PENDING,
         isServerError: true,
       });
   });

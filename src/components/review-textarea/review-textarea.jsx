@@ -11,8 +11,7 @@ const ReviewTextarea = ({onCommentChange, disabled}) => (
     maxLength={ReviewParameter.COMMENT_MAX_LENGTH}
     minLength={ReviewParameter.COMMENT_MIN_LENGTH}
     disabled={disabled}
-    data-testid={`review-textarea`}>
-  </textarea>
+    data-testid={`review-textarea`} />
 );
 
 ReviewTextarea.propTypes = {

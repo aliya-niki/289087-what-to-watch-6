@@ -27,7 +27,7 @@ it(`Main should render correctly`, () => {
 
   const history = createMemoryHistory();
 
-  const {container} = render(
+  render(
       <redux.Provider store={store}>
         <Router history={history}>
           <Main />
@@ -38,6 +38,4 @@ it(`Main should render correctly`, () => {
   expect(screen.getByText(/WTW/i)).toBeInTheDocument();
   expect(screen.getByText(/All genres/i)).toBeInTheDocument();
   expect(screen.getByText(filmsAdapted[0].released)).toBeInTheDocument();
-
-  expect(container).toMatchSnapshot();
 });

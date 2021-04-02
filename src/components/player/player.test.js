@@ -27,7 +27,7 @@ it(`Player should render correctly`, () => {
   const history = createMemoryHistory();
   history.push(`/player/2`);
 
-  const {container} = render(
+  render(
       <redux.Provider store={store}>
         <Router history={history}>
           <Route path={AppRoute.PLAYER} >
@@ -40,7 +40,5 @@ it(`Player should render correctly`, () => {
   expect(screen.getByText(/Exit/i)).toBeInTheDocument();
   expect(screen.getByText(/Full screen/i)).toBeInTheDocument();
   expect(screen.getByText(/Play/i)).toBeInTheDocument();
-
-  expect(container).toMatchSnapshot();
 });
 

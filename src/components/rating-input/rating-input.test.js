@@ -6,12 +6,10 @@ import RatingInput from './rating-input';
 const mockRatingValue = `Rating 8`;
 
 it(`RatingInput should render correctly`, () => {
-  const {container} = render(
+  render(
       <RatingInput onRatingChange={jest.fn()} disabled={false}/>
   );
 
   userEvent.click(screen.getByText(mockRatingValue));
   expect(screen.getByLabelText(mockRatingValue)).toBeChecked();
-
-  expect(container).toMatchSnapshot();
 });

@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Link, useHistory, useParams} from 'react-router-dom';
 import {useSelector} from 'react-redux';
-import {getIsAuthorized} from '../../store/user/selectors';
-import {getFilmById, getSimilarFilms} from '../../store/data/selectors';
-
+import {getIsAuthorizedSelector} from '../../store/user/selectors';
+import {getFilmByIdSelector, getSimilarFilmsSelector} from '../../store/data/selectors';
+import {AppRoute} from '../../const';
 import MoviesList from '../movies-list/movies-list';
 import NotFoundPage from '../not-found-page/not-found-page';
 import Tabs from '../tabs/tabs';
@@ -14,12 +14,20 @@ import AddToFavorites from '../add-to-favorites/add-to-favorites';
 const Film = () => {
   const {id} = useParams();
 
-  const film = useSelector((state) => getFilmById(state, id));
-  const similarFilms = useSelector((state) => getSimilarFilms(state, id));
-  const isAuthorized = useSelector((state) => getIsAuthorized(state));
+  const film = useSelector((state) => getFilmByIdSelector(state, id));
+  const similarFilms = useSelector((state) => getSimilarFilmsSelector(state, id));
+  const isAuthorized = useSelector((state) => getIsAuthorizedSelector(state));
 
   const history = useHistory();
-  const handleOnPlayClick = () => history.push(`/player/${id}`);
+  const handleOnPlayClick = () => history.push(AppRoute.PLAYER.replace(`:id`, id));
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: `smooth`
+    });
+  }, [id]);
 
   if (!film) {
     return <NotFoundPage />;
@@ -49,13 +57,13 @@ const Film = () => {
               <div className="movie-card__buttons">
                 <button className="btn btn--play movie-card__button" type="button" onClick={handleOnPlayClick}>
                   <svg viewBox="0 0 19 19" width="19" height="19">
-                    <use xlinkHref="#play-s"></use>
+                    <use xlinkHref="#play-s" />
                   </svg>
                   <span>Play</span>
                 </button>
                 <AddToFavorites id={Number(id)}/>
                 { isAuthorized &&
-                  <Link to={`/films/${id}/review`} className="btn movie-card__button">Add review</Link>
+                  <Link to={AppRoute.REVIEW.replace(`:id`, id)} className="btn movie-card__button">Add review</Link>
                 }
               </div>
             </div>

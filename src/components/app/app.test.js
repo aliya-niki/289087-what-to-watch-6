@@ -23,13 +23,12 @@ describe(`Test routing`, () => {
         userAuthorizationInfo: null,
       },
       [NameSpace.DATA]: {
-        favorites: [],
         films: filmsAdapted,
         promo,
       },
       [NameSpace.APP]: {
         activeGenre: DEFAULT_ACTIVE_GENRE,
-      }
+      },
     });
 
     const history = createMemoryHistory();
@@ -53,7 +52,6 @@ describe(`Test routing`, () => {
         userAuthorizationInfo: null,
       },
       [NameSpace.DATA]: {
-        favorites: [],
         films: filmsAdapted,
         promo,
       }
@@ -82,9 +80,11 @@ describe(`Test routing`, () => {
         userAuthorizationInfo: authAdapted,
       },
       [NameSpace.DATA]: {
-        favorites: filmsAdapted,
         films: filmsAdapted,
         promo,
+      },
+      [NameSpace.FAVORITES]: {
+        favorites: filmsAdapted,
       }
     });
 
@@ -109,6 +109,7 @@ describe(`Test routing`, () => {
   });
 
   it(`should render 'Film' when user navigates to '/film' url`, async () => {
+    window.scrollTo = jest.fn();
     const store = mockStore({
       [NameSpace.USER]: {
         authorizationError: false,

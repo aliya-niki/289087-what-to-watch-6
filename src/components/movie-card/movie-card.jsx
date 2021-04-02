@@ -2,6 +2,7 @@ import React, {useState, useEffect, memo} from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import {filmPropsValidation} from '../../props-validation';
+import {AppRoute} from '../../const';
 import PreviewPlayer from '../preview-player/preview-player';
 
 const PREVIEW_PLAYER_TIMEOUT = 1000;
@@ -35,7 +36,7 @@ const MovieCard = ({film, onHover, isActive}) => {
     <article className="small-movie-card catalog__movies-card"
       onMouseOver={handleOnCardMouseHover}
       onMouseLeave={handleOnCardMouseLeave} >
-      <Link to={`/films/${id}`} className="small-movie-card__link">
+      <Link to={AppRoute.FILM.replace(`:id`, id)} className="small-movie-card__link">
         <div className="small-movie-card__image">
           { isActive
             ? <PreviewPlayer poster={previewImage} src={previewVideoLink} isPlaying={isPlaying}/>
