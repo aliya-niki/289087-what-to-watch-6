@@ -18,7 +18,7 @@ it(`AddReviewForm should render correctly`, () => {
       authorizationError: false,
       userAuthorizationInfo: authAdapted,
     },
-    [NameSpace.DATA]: {
+    [NameSpace.FILMS]: {
       films: filmsAdapted,
       promo: filmsAdapted[0],
     },

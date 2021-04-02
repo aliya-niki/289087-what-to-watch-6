@@ -22,7 +22,7 @@ describe(`Test routing`, () => {
         authorizationError: false,
         userAuthorizationInfo: null,
       },
-      [NameSpace.DATA]: {
+      [NameSpace.FILMS]: {
         films: filmsAdapted,
         promo,
       },
@@ -51,7 +51,7 @@ describe(`Test routing`, () => {
         authorizationError: false,
         userAuthorizationInfo: null,
       },
-      [NameSpace.DATA]: {
+      [NameSpace.FILMS]: {
         films: filmsAdapted,
         promo,
       }
@@ -79,7 +79,7 @@ describe(`Test routing`, () => {
         authorizationError: false,
         userAuthorizationInfo: authAdapted,
       },
-      [NameSpace.DATA]: {
+      [NameSpace.FILMS]: {
         films: filmsAdapted,
         promo,
       },
@@ -115,7 +115,7 @@ describe(`Test routing`, () => {
         authorizationError: false,
         userAuthorizationInfo: null,
       },
-      [NameSpace.DATA]: {
+      [NameSpace.FILMS]: {
         films: filmsAdapted,
         promo,
       }
@@ -147,7 +147,7 @@ describe(`Test routing`, () => {
         authorizationError: false,
         userAuthorizationInfo: null,
       },
-      [NameSpace.DATA]: {
+      [NameSpace.FILMS]: {
         films: filmsAdapted,
         promo,
       }
@@ -175,7 +175,7 @@ describe(`Test routing`, () => {
         authorizationError: false,
         userAuthorizationInfo: authAdapted,
       },
-      [NameSpace.DATA]: {
+      [NameSpace.FILMS]: {
         films: filmsAdapted,
         promo,
       }
@@ -207,7 +207,7 @@ describe(`Test routing`, () => {
         authorizationError: false,
         userAuthorizationInfo: null,
       },
-      [NameSpace.DATA]: {
+      [NameSpace.FILMS]: {
         films: filmsAdapted,
         promo,
       }

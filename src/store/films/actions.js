@@ -1,7 +1,7 @@
 export const ActionType = {
-  LOAD_FILMS: `data/loadFilms`,
-  LOAD_PROMO: `data/loadPromo`,
-  SET_SERVER_ERROR: `data/setServerError`,
+  LOAD_FILMS: `films/loadFilms`,
+  LOAD_PROMO: `films/loadPromo`,
+  SET_SERVER_ERROR: `films/setServerError`,
 };
 
 export const loadFilms = (films) => ({

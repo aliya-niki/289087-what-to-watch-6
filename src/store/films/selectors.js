@@ -6,13 +6,13 @@ import {findSimilarFilms} from '../../utils';
 
 const getFilmIdSelector = (_state, id) => id;
 
-export const getFilmsSelector = (state) => get(state, `${NameSpace.DATA}.films`, []);
+export const getFilmsSelector = (state) => get(state, `${NameSpace.FILMS}.films`, []);
 
-export const getPromoSelector = (state) => get(state, `${NameSpace.DATA}.promo`, null);
+export const getPromoSelector = (state) => get(state, `${NameSpace.FILMS}.promo`, null);
 
 export const getIsDataLoadedSelector = (state) => !!getPromoSelector(state) && !!getFilmsSelector(state).length;
 
-export const getIsServerErrorSelector = (state) => get(state, `${NameSpace.DATA}.isServerError`, false);
+export const getIsServerErrorSelector = (state) => get(state, `${NameSpace.FILMS}.isServerError`, false);
 
 export const getGenresSelector = createSelector(
     getFilmsSelector,

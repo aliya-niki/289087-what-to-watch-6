@@ -1,12 +1,12 @@
 import {combineReducers} from 'redux';
 import {reducer as app} from './app/reducer';
-import {reducer as data} from './data/reducer';
+import {reducer as films} from './films/reducer';
 import {reducer as user} from './user/reducer';
 import {reducer as favorites} from './favorites/reducer';
 import {reducer as review} from './review/reducer';
 
 export const NameSpace = {
-  DATA: `DATA`,
+  FILMS: `FILMS`,
   APP: `APP`,
   USER: `USER`,
   FAVORITES: `FAVORITES`,
@@ -14,7 +14,7 @@ export const NameSpace = {
 };
 
 export default combineReducers({
-  [NameSpace.DATA]: data,
+  [NameSpace.FILMS]: films,
   [NameSpace.APP]: app,
   [NameSpace.USER]: user,
   [NameSpace.FAVORITES]: favorites,

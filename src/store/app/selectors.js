@@ -1,7 +1,7 @@
 import {createSelector} from 'reselect';
 import get from 'lodash/get';
 import {NameSpace} from '../reducer';
-import {getFilmsSelector} from '../data/selectors';
+import {getFilmsSelector} from '../films/selectors';
 import {filterByGenre} from '../../utils';
 import {DEFAULT_ACTIVE_GENRE} from '../../const';
 

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {connect, useSelector} from 'react-redux';
 import {changeActiveGenre} from '../../store/app/actions';
 import {getActiveGenreSelector} from '../../store/app/selectors';
-import {getGenresSelector} from '../../store/data/selectors';
+import {getGenresSelector} from '../../store/films/selectors';
 
 const GenresList = ({onGenreChange}) => {
   const activeGenre = useSelector(getActiveGenreSelector);

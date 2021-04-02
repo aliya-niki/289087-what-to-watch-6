@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link, useParams} from 'react-router-dom';
 import {useSelector} from 'react-redux';
-import {getFilmByIdSelector} from '../../store/data/selectors';
+import {getFilmByIdSelector} from '../../store/films/selectors';
 import {AppRoute} from '../../const';
 import AddReviewForm from '../add-review-form/add-review-form';
 import NotFoundPage from '../not-found-page/not-found-page';

@@ -1,10 +1,10 @@
 import React, {useRef, useState} from 'react';
 import PropTypes from 'prop-types';
-import {Link} from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
 import {connect, useSelector} from 'react-redux';
 import {login} from '../../store/user/operations';
 import {AppRoute} from '../../const';
-import {getAuthorizationErrorSelector} from '../../store/user/selectors';
+import {getAuthorizationErrorSelector, getIsAuthorizedSelector} from '../../store/user/selectors';
 import Footer from '../footer/footer';
 
 const SignIn = ({onLogin}) => {
@@ -12,6 +12,7 @@ const SignIn = ({onLogin}) => {
   const loginRef = useRef();
   const passwordRef = useRef();
   const authorizationError = useSelector(getAuthorizationErrorSelector);
+  const isAuthorized = useSelector(getIsAuthorizedSelector);
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
@@ -21,6 +22,10 @@ const SignIn = ({onLogin}) => {
       password: passwordRef.current.value,
     });
   };
+
+  if (isAuthorized) {
+    return <Redirect to={AppRoute.MAIN} />;
+  }
 
   return (
     <div className="user-page">

@@ -5,7 +5,7 @@ import {Provider} from 'react-redux';
 import browserHistory from './browser-history';
 import store from './store/store';
 import {checkAuth} from './store/user/operations';
-import {fetchFilmsList, fetchPromo} from './store/data/operations';
+import {fetchFilmsList, fetchPromo} from './store/films/operations';
 import {fetchFavorites} from './store/favorites/operations';
 import App from './components/app/app';
 

@@ -16,7 +16,7 @@ it(`Main should render correctly`, () => {
       authorizationError: false,
       userAuthorizationInfo: null,
     },
-    [NameSpace.DATA]: {
+    [NameSpace.FILMS]: {
       films: filmsAdapted,
       promo: filmsAdapted[0],
     },

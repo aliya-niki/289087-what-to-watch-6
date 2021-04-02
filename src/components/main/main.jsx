@@ -3,7 +3,7 @@ import {useSelector} from 'react-redux';
 import {Link, useHistory} from 'react-router-dom';
 import {MOVIES_NUMBER_PER_STEP, AppRoute} from '../../const';
 import {getActiveGenreSelector, getFilmsFilteredByGenreSelector} from '../../store/app/selectors';
-import {getPromoSelector} from '../../store/data/selectors';
+import {getPromoSelector} from '../../store/films/selectors';
 import MoviesList from '../movies-list/movies-list';
 import GenresList from '../genres-list/genres-list';
 import ShowMore from '../show-more/show-more';

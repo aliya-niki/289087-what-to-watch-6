@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {Link, useHistory, useParams} from 'react-router-dom';
 import {useSelector} from 'react-redux';
 import {getIsAuthorizedSelector} from '../../store/user/selectors';
-import {getFilmByIdSelector, getSimilarFilmsSelector} from '../../store/data/selectors';
+import {getFilmByIdSelector, getSimilarFilmsSelector} from '../../store/films/selectors';
 import {AppRoute} from '../../const';
 import MoviesList from '../movies-list/movies-list';
 import NotFoundPage from '../not-found-page/not-found-page';

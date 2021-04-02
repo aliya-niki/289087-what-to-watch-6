@@ -19,7 +19,7 @@ describe(`AddToFavorites button`, () => {
         authorizationError: false,
         userAuthorizationInfo: authAdapted,
       },
-      [NameSpace.DATA]: {
+      [NameSpace.FILMS]: {
         films: filmsAdapted,
         promo: filmsAdapted[0],
       },
@@ -47,7 +47,7 @@ describe(`AddToFavorites button`, () => {
         authorizationError: false,
         userAuthorizationInfo: authAdapted,
       },
-      [NameSpace.DATA]: {
+      [NameSpace.FILMS]: {
         films: filmsAdapted,
         promo: filmsAdapted[0],
       },

@@ -1,7 +1,7 @@
 import React, {useRef, useState} from 'react';
 import {useHistory, useParams} from 'react-router-dom';
 import {useSelector} from 'react-redux';
-import {getFilmByIdSelector} from '../../store/data/selectors';
+import {getFilmByIdSelector} from '../../store/films/selectors';
 import {convertSecondsToHHMMss, SECONDS_IN_MINUTE} from '../../utils';
 import {AppRoute} from '../../const';
 import NotFoundPage from '../not-found-page/not-found-page';

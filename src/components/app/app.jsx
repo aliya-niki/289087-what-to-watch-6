@@ -2,7 +2,7 @@ import React from 'react';
 import {Switch, Route} from 'react-router-dom';
 import {useSelector} from 'react-redux';
 import {AppRoute} from '../../const';
-import {getIsDataLoadedSelector, getIsServerErrorSelector} from '../../store/data/selectors';
+import {getIsDataLoadedSelector, getIsServerErrorSelector} from '../../store/films/selectors';
 import Main from '../main/main';
 import SignIn from '../sign-in/sign-in';
 import MyList from '../my-list/my-list';

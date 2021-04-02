@@ -14,7 +14,7 @@ it(`GenresList should render correctly`, () => {
     [NameSpace.APP]: {
       activeGenre: DEFAULT_ACTIVE_GENRE,
     },
-    [NameSpace.DATA]: {
+    [NameSpace.FILMS]: {
       films: filmsAdapted,
       promo: filmsAdapted[0],
     }
