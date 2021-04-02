@@ -23,25 +23,28 @@ const MovieReviews = ({id}) => {
 
   return (
     <React.Fragment>
-      {isLoading ? <p>Loading reviews...</p> : ``}
-      {error ? <p>There was an error when loading reviews</p> : ``}
+      {isLoading ? <div className="review">Loading reviews...</div> : ``}
+      {error ? <div className="review">There was an error when loading reviews</div> : ``}
 
-      <div className="movie-card__reviews movie-card__row">
-        <div className="movie-card__reviews-col">
-          {reviewsToFirstColumn.map((review, index) =>
-            <MovieReview
-              key={`comment-${review.user.name}-${index}`}
-              review={review} />
-          )}
+      {reviews.length
+        ? <div className="movie-card__reviews movie-card__row">
+          <div className="movie-card__reviews-col">
+            {reviewsToFirstColumn.map((review, index) =>
+              <MovieReview
+                key={`comment-${review.user.name}-${index}`}
+                review={review} />
+            )}
+          </div>
+          <div className="movie-card__reviews-col">
+            {reviewsToSecondColumn.map((review, index) =>
+              <MovieReview
+                key={`comment-${review.user.name}-${index}`}
+                review={review} />
+            )}
+          </div>
         </div>
-        <div className="movie-card__reviews-col">
-          {reviewsToSecondColumn.map((review, index) =>
-            <MovieReview
-              key={`comment-${review.user.name}-${index}`}
-              review={review} />
-          )}
-        </div>
-      </div>
+        : <div className="review">There are no reviews yet.</div>
+      }
     </React.Fragment>
   );
 };

@@ -1,22 +1,22 @@
 import React, {useState, useEffect} from 'react';
 import {useSelector} from 'react-redux';
 import {Link, useHistory} from 'react-router-dom';
+import {MOVIES_NUMBER_PER_STEP} from '../../const';
+import {getActiveGenreSelector, getFilmsFilteredByGenreSelector} from '../../store/app/selectors';
+import {getPromoSelector} from '../../store/data/selectors';
 import MoviesList from '../movies-list/movies-list';
 import GenresList from '../genres-list/genres-list';
 import ShowMore from '../show-more/show-more';
 import Header from '../header/header';
 import Footer from '../footer/footer';
 import AddToFavorites from '../add-to-favorites/add-to-favorites';
-import {getActiveGenre, getFilmsFilteredByGenre} from '../../store/app/selectors';
-import {MOVIES_NUMBER_PER_STEP} from '../../const';
-import {getPromo} from '../../store/data/selectors';
 
 const Main = () => {
   const [shownFilmsNumber, setShownFilmsNumber] = useState(MOVIES_NUMBER_PER_STEP);
 
-  const promo = useSelector(getPromo);
-  const filteredFilms = useSelector(getFilmsFilteredByGenre);
-  const activeGenre = useSelector(getActiveGenre);
+  const promo = useSelector(getPromoSelector);
+  const filteredFilms = useSelector(getFilmsFilteredByGenreSelector);
+  const activeGenre = useSelector(getActiveGenreSelector);
 
   useEffect(() => {
     setShownFilmsNumber(MOVIES_NUMBER_PER_STEP);
@@ -63,7 +63,7 @@ const Main = () => {
               <div className="movie-card__buttons">
                 <button className="btn btn--play movie-card__button" type="button" onClick={handleOnPlayClick}>
                   <svg viewBox="0 0 19 19" width="19" height="19">
-                    <use xlinkHref="#play-s"></use>
+                    <use xlinkHref="#play-s" />
                   </svg>
                   <span>Play</span>
                 </button>

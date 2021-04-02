@@ -32,20 +32,32 @@ exports[`Header should render correctly with authorized user 1`] = `
     <div
       class="user-block"
     >
-      <a
-        href="/mylist"
+      <div
+        style="display: flex; align-items: center;"
       >
         <div
           class="user-block__avatar"
+          style="margin-right: 15px;"
         >
-          <img
-            alt="User avatar"
-            height="63"
-            src="keks.jpeg"
-            width="63"
-          />
+          <a
+            class="user-block__link"
+            href="/mylist"
+          >
+            <img
+              alt="User avatar"
+              height="63"
+              src="keks.jpeg"
+              width="63"
+            />
+          </a>
         </div>
-      </a>
+        <a
+          class="user-block__link"
+          style="cursor: pointer;"
+        >
+          Logout
+        </a>
+      </div>
     </div>
   </header>
 </div>

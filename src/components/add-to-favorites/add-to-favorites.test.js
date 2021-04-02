@@ -60,7 +60,6 @@ describe(`AddToFavorites button`, () => {
         </redux.Provider>
     );
 
-    expect(screen.getByText(/My list/i)).toBeInTheDocument();
     expect(container).toMatchSnapshot();
   });
 });

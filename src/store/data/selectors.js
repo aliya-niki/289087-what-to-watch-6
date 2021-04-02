@@ -1,19 +1,25 @@
 import {createSelector} from 'reselect';
+import get from 'lodash/get';
 import {NameSpace} from '../reducer';
-import {GENRES_MAX_NUMBER, DEFAULT_ACTIVE_GENRE} from '../../const';
+import {GENRES_MAX_NUMBER, DEFAULT_ACTIVE_GENRE, ReviewPostStatus} from '../../const';
 import {findSimilarFilms} from '../../utils';
 
-const getFilmId = (_state, id) => id;
+const getFilmIdSelector = (_state, id) => id;
 
-export const getFilms = (state) => state[NameSpace.DATA].films;
-export const getPromo = (state) => state[NameSpace.DATA].promo;
-export const getIsDataLoaded = (state) => !!state[NameSpace.DATA].films.length && !!state[NameSpace.DATA].promo;
-export const getFavorites = (state) => state[NameSpace.DATA].favorites;
-export const getReviewPostStatus = (state) => state[NameSpace.DATA].reviewPostStatus;
-export const getIsServerError = (state) => state[NameSpace.DATA].isServerError;
+export const getFilmsSelector = (state) => get(state, `${NameSpace.DATA}.films`, []);
 
-export const getGenres = createSelector(
-    getFilms,
+export const getPromoSelector = (state) => get(state, `${NameSpace.DATA}.promo`, null);
+
+export const getIsDataLoadedSelector = (state) => !!getPromoSelector(state) && !!getFilmsSelector(state).length;
+
+export const getFavoritesSelector = (state) => get(state, `${NameSpace.DATA}.favorites`, []);
+
+export const getReviewPostStatusSelector = (state) => get(state, `${NameSpace.DATA}.reviewPostStatus`, ReviewPostStatus.PENDING);
+
+export const getIsServerErrorSelector = (state) => get(state, `${NameSpace.DATA}.isServerError`, false);
+
+export const getGenresSelector = createSelector(
+    getFilmsSelector,
     (films) => {
       const genres = new Set();
       films.forEach(({genre}) => {
@@ -27,8 +33,8 @@ export const getGenres = createSelector(
     }
 );
 
-export const getFilmById = createSelector(
-    [getFilms, getFilmId],
+export const getFilmByIdSelector = createSelector(
+    [getFilmsSelector, getFilmIdSelector],
     (films, id) => {
       if (Array.isArray(films)) {
         return films.find((film) => film.id === +id);
@@ -37,8 +43,8 @@ export const getFilmById = createSelector(
     }
 );
 
-export const getSimilarFilms = createSelector(
-    [getFilms, getFilmById],
+export const getSimilarFilmsSelector = createSelector(
+    [getFilmsSelector, getFilmByIdSelector],
     (films, film) => {
       return findSimilarFilms(films, film.id, film.genre);
     }

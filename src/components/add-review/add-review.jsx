@@ -1,23 +1,15 @@
-import React, {useEffect} from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import {Link, useParams} from 'react-router-dom';
-import {connect, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 import AddReviewForm from '../add-review-form/add-review-form';
 import NotFoundPage from '../not-found-page/not-found-page';
 import Header from '../header/header';
-import {getFilmById} from '../../store/data/selectors';
-import {logout} from '../../store/user/operations';
+import {getFilmByIdSelector} from '../../store/data/selectors';
 
-const AddReview = ({onLogout}) => {
+const AddReview = () => {
   const {id} = useParams();
 
-  const film = useSelector((state) => getFilmById(state, id));
-
-  useEffect(() => {
-    return () => {
-      onLogout();
-    };
-  }, []);
+  const film = useSelector((state) => getFilmByIdSelector(state, id));
 
   if (!film) {
     return <NotFoundPage />;
@@ -58,13 +50,4 @@ const AddReview = ({onLogout}) => {
   );
 };
 
-AddReview.propTypes = {
-  onLogout: PropTypes.func.isRequired,
-};
-
-const mapDispatchToProps = {
-  onLogout: logout,
-};
-
-export {AddReview};
-export default connect(null, mapDispatchToProps)(AddReview);
+export default AddReview;

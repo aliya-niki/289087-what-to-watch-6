@@ -1,5 +1,5 @@
 import React from 'react';
-import {render, screen} from '@testing-library/react';
+import {render} from '@testing-library/react';
 import {Route, Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
 import * as redux from 'react-redux';
@@ -11,6 +11,7 @@ import {filmsAdapted} from '../../tests-mocks';
 
 const mockStore = configureStore({});
 it(`Film should render correctly`, () => {
+  window.scrollTo = jest.fn();
   const store = mockStore({
     [NameSpace.USER]: {
       authorizationError: false,
@@ -34,6 +35,5 @@ it(`Film should render correctly`, () => {
       </redux.Provider>
   );
 
-  expect(screen.getByText(/WTW/i)).toBeInTheDocument();
   expect(container).toMatchSnapshot();
 });

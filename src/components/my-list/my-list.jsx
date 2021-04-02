@@ -4,20 +4,15 @@ import {connect, useSelector} from 'react-redux';
 import MoviesList from '../movies-list/movies-list';
 import Header from '../header/header';
 import Footer from '../footer/footer';
-import {getFavorites} from '../../store/data/selectors';
-import {logout} from '../../store/user/operations';
+import {getFavoritesSelector} from '../../store/data/selectors';
 import {fetchFavorites} from '../../store/data/operations';
 
-const MyList = ({onLogout, onFetchFavorites}) => {
+const MyList = ({onFetchFavorites}) => {
   useEffect(() => {
     onFetchFavorites();
-
-    return () => {
-      onLogout();
-    };
   }, []);
 
-  const myListFilms = useSelector(getFavorites);
+  const myListFilms = useSelector(getFavoritesSelector);
 
   return (
     <div className="user-page">
@@ -37,12 +32,10 @@ const MyList = ({onLogout, onFetchFavorites}) => {
 };
 
 MyList.propTypes = {
-  onLogout: PropTypes.func.isRequired,
   onFetchFavorites: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = {
-  onLogout: logout,
   onFetchFavorites: fetchFavorites
 };
 

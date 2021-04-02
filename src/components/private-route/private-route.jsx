@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {Route, Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {AppRoute} from '../../const';
-import {getIsAuthorized} from '../../store/user/selectors';
+import {getIsAuthorizedSelector} from '../../store/user/selectors';
 
 const PrivateRoute = ({render, path, exact, isAuthorized}) => {
   return (
@@ -29,9 +29,8 @@ PrivateRoute.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  isAuthorized: getIsAuthorized(state),
+  isAuthorized: getIsAuthorizedSelector(state),
 });
-
 
 export {PrivateRoute};
 export default connect(mapStateToProps)(PrivateRoute);

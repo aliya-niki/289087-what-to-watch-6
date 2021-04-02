@@ -19,9 +19,7 @@ const PreviewPlayer = ({isPlaying, src, poster}) => {
       poster={poster}
       ref={videoRef}
       src={src}
-      width="280"
-    >
-    </video>
+      width="280" />
   );
 };
 

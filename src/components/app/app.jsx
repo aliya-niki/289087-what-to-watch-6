@@ -12,11 +12,11 @@ import LoadingScreen from '../loading-screen/loading-screen';
 import PrivateRoute from '../private-route/private-route';
 import ServerErrorScreen from '../server-error-screen/server-error-screen';
 import {AppRoute} from '../../const';
-import {getIsDataLoaded, getIsServerError} from '../../store/data/selectors';
+import {getIsDataLoadedSelector, getIsServerErrorSelector} from '../../store/data/selectors';
 
 const App = () => {
-  const isDataLoaded = useSelector(getIsDataLoaded);
-  const isServerError = useSelector(getIsServerError);
+  const isDataLoaded = useSelector(getIsDataLoadedSelector);
+  const isServerError = useSelector(getIsServerErrorSelector);
 
   if (isServerError) {
     return (

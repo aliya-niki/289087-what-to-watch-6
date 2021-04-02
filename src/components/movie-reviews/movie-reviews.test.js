@@ -11,12 +11,11 @@ it(`MovieReviews should render correctly`, async () => {
 
   axios.mockResolvedValue({data: fakeResponse});
 
-  const {container} = render(<MovieReviews id={2}/>);
+  render(<MovieReviews id={2}/>);
 
   await waitFor(() => {
     expect(screen.queryByText(`Loading reviews`)).not.toBeInTheDocument();
   });
 
   expect(screen.getByText(reviews[0].user.name)).toBeInTheDocument();
-  expect(container).toMatchSnapshot();
 });

@@ -7,7 +7,7 @@ import NotFoundPage from './not-found-page';
 it(`NotFoundPage should render correctly`, () => {
   const history = createMemoryHistory();
 
-  const {container} = render(
+  render(
       <Router history={history}>
         <NotFoundPage />
       </Router>
@@ -15,6 +15,4 @@ it(`NotFoundPage should render correctly`, () => {
 
   expect(screen.getByText(`404. Page not found`)).toBeInTheDocument();
   expect(screen.getByText(`Вернуться на главную`)).toBeInTheDocument();
-
-  expect(container).toMatchSnapshot();
 });

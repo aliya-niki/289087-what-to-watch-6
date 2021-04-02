@@ -4,14 +4,14 @@ import {Link} from 'react-router-dom';
 import {connect, useSelector} from 'react-redux';
 import {login} from '../../store/user/operations';
 import {AppRoute} from '../../const';
+import {getAuthorizationErrorSelector} from '../../store/user/selectors';
 import Footer from '../footer/footer';
-import {getAuthorizationError} from '../../store/user/selectors';
 
 const SignIn = ({onLogin}) => {
   const [isEmailValid, setEmailValidity] = useState(true);
   const loginRef = useRef();
   const passwordRef = useRef();
-  const authorizationError = useSelector(getAuthorizationError);
+  const authorizationError = useSelector(getAuthorizationErrorSelector);
 
   const handleSubmit = (evt) => {
     evt.preventDefault();

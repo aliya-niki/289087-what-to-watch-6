@@ -109,6 +109,7 @@ describe(`Test routing`, () => {
   });
 
   it(`should render 'Film' when user navigates to '/film' url`, async () => {
+    window.scrollTo = jest.fn();
     const store = mockStore({
       [NameSpace.USER]: {
         authorizationError: false,
